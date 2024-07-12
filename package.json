@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prettier": "prettier \"**/*.{js,ts,jsx,tsx,astro}\"",
+    "prettier:fix": "npm run prettier -- --write"
   },
   "dependencies": {
     "@radix-ui/react-select": "^2.1.1",
