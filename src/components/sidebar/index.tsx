@@ -8,10 +8,12 @@ import { useState } from "react";
 
 type Props = {
   fontWeight: FontWeight;
+  textColor: string;
   strokeWidth: number;
   directionCount: number;
   strokeColor: string;
   onChangeFontWeight: (value: FontWeight) => void;
+  onChangeTextColor: (value: string) => void;
   onChangeStrokeWidth: (value: number) => void;
   onChangeDirectionCount: (value: number) => void;
   onChangeStrokeColor: (value: string) => void;
@@ -23,10 +25,12 @@ const validateFontWeight = (value: number): value is FontWeight => {
 
 export default function Sidebar({
   fontWeight,
+  textColor,
   strokeWidth,
   directionCount,
   strokeColor,
   onChangeFontWeight,
+  onChangeTextColor,
   onChangeStrokeWidth,
   onChangeDirectionCount,
   onChangeStrokeColor,
@@ -75,6 +79,25 @@ export default function Sidebar({
             onChange={handleChangeFontWeight}
           />
         </div>
+
+        <label htmlFor="text-color-input" className="relative grid gap-2">
+          <span>
+            文字の色: <code>{textColor}</code>
+          </span>
+          <span
+            aria-hidden="true"
+            className="block h-6 rounded border border-gray-400"
+            style={{ backgroundColor: textColor }}
+          />
+          <input
+            id="text-color-input"
+            type="color"
+            value={textColor}
+            className="sr-only bottom-0"
+            onChange={(e) => onChangeTextColor(e.target.value)}
+            aria-label="文字の色"
+          />
+        </label>
 
         <div className="grid gap-2">
           <label htmlFor="stroke-width-slider">

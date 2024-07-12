@@ -1,8 +1,9 @@
-import { useEffect, useRef, type CSSProperties } from "react";
+import { useRef, type CSSProperties } from "react";
 import { generateTextShadow } from "./generate-text-shadow";
 
 type Props = {
   children: string;
+  textColor: string;
   strokeColor: string;
   strokeWidth: number;
   directionCount?: number;
@@ -11,17 +12,21 @@ type Props = {
 
 export default function StrokeText({
   children,
+  textColor,
   strokeColor,
   strokeWidth,
   directionCount = Math.max(50, Math.min(500, strokeWidth * 10)),
   shadowInterval = Math.max(1, strokeWidth / 10),
 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {}, []);
+  console.log(textColor);
 
   return (
-    <div ref={ref} className="relative">
+    <div
+      ref={ref}
+      className="relative leading-normal"
+      style={{ color: textColor }}
+    >
       <div
         style={
           {
@@ -36,7 +41,7 @@ export default function StrokeText({
       >
         {children}
       </div>
-      <div className="absolute inset-0">{children}</div>
+      <div className="absolute inset-0 z-10">{children}</div>
     </div>
   );
 }
