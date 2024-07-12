@@ -130,14 +130,14 @@ export default function Sidebar({
           <div className="relative">
             <button
               data-clipboard
-              className="absolute right-1 top-1 rounded bg-black p-1 text-white hover:bg-slate-500"
+              className="absolute right-1 top-1 rounded bg-foreground p-1 text-white hover:bg-slate-500"
               aria-label="コピー"
               onClick={copyTextShadow}
             >
               {copyed ? <ClipboardCheck size={20} /> : <Clipboard size={20} />}
             </button>
             <pre className="grid">
-              <code className="block overflow-auto rounded bg-black p-4 pr-8 text-white">
+              <code className="block overflow-auto rounded bg-foreground p-4 pr-8 text-white">
                 {code}
               </code>
             </pre>
