@@ -1,10 +1,9 @@
 import type { FontWeight } from "@/App";
 import Header from "@/components/header";
+import CodeSnippet from "@/components/sidebar/code-snippet";
 import CustomSelect from "@/components/sidebar/custom-select";
 import { generateTextShadow } from "@/components/stroke-text/generate-text-shadow";
 import { Slider } from "@/components/ui/slider";
-import { Clipboard, ClipboardCheck } from "lucide-react";
-import { useRef, useState } from "react";
 
 type Props = {
   fontWeight: FontWeight;
@@ -35,10 +34,10 @@ export default function Sidebar({
   onChangeDirectionCount,
   onChangeStrokeColor,
 }: Props) {
-  const [copyed, setCopyed] = useState(false);
-  const copyedTimerId = useRef<number>(0);
-
-  const code = `text-shadow: ${generateTextShadow(strokeWidth, directionCount, 2)};\n--stroke-color: ${strokeColor};`;
+  const code = `color: ${textColor};
+font-weight: ${fontWeight};
+text-shadow: ${generateTextShadow(strokeWidth, directionCount, 2)};
+--stroke-color: ${strokeColor};`;
 
   const handleChangeFontWeight = (value: string) => {
     const num = Number(value);
@@ -47,17 +46,8 @@ export default function Sidebar({
     }
   };
 
-  const copyTextShadow = () => {
-    clearTimeout(copyedTimerId.current);
-    navigator.clipboard.writeText(code);
-    setCopyed(true);
-    copyedTimerId.current = window.setTimeout(() => {
-      setCopyed(false);
-    }, 1000);
-  };
-
   return (
-    <div className="bg-sidebar text-sidebar-foreground grid h-full place-content-start gap-10 overflow-y-auto rounded-e-3xl px-4 py-8">
+    <div className="bg-sidebar text-sidebar-foreground relative grid h-full place-content-start gap-10 overflow-y-auto px-4 py-8">
       <Header />
 
       <div className="grid gap-8">
@@ -150,23 +140,9 @@ export default function Sidebar({
           />
         </label>
 
-        <div className="grid gap-2">
+        <div className="sticky bottom-0 left-0 right-0 grid gap-2">
           <p>コード</p>
-          <div className="relative">
-            <button
-              data-clipboard
-              className="bg-sidebar absolute right-1 top-1 rounded p-1 hover:opacity-80"
-              aria-label="クリップボードにコピーする"
-              onClick={copyTextShadow}
-            >
-              {copyed ? <ClipboardCheck size={20} /> : <Clipboard size={20} />}
-            </button>
-            <pre className="grid">
-              <code className="block overflow-auto rounded border border-input bg-gray-800 p-4 pr-8">
-                {code}
-              </code>
-            </pre>
-          </div>
+          <CodeSnippet code={code} />
         </div>
       </div>
     </div>
