@@ -9,10 +9,10 @@ const SAMPLE_TEXT = `Lorem, ipsum dolor sit amet consectetur adipisicing elit. V
 あのイーハトーヴォのすきとおった風、夏でも底に冷たさをもつ青いそら、うつくしい森で飾られたモリーオ市、郊外のぎらぎらひかる草の波。`;
 
 function App() {
-  const [fontWeight, setFontWeight] = useState<FontWeight>(400);
+  const [fontWeight, setFontWeight] = useState<FontWeight>(700);
   const [textColor, setTextColor] = useState("#ffffff");
-  const [strokeWidth, setStrokeWidth] = useState(4);
-  const [directionCount, setDirectionCount] = useState(20);
+  const [strokeWidth, setStrokeWidth] = useState(6);
+  const [directionCount, setDirectionCount] = useState(40);
   const [strokeColor, setStrokeColor] = useState("#000000");
   const [sampleText, setSampleText] = useState(SAMPLE_TEXT);
 
@@ -64,14 +64,6 @@ function App() {
           className="grid flex-1 gap-10 p-8 text-4xl font-bold"
           style={{ fontWeight }}
         >
-          <StrokeText
-            textColor={textColor}
-            strokeColor={strokeColor}
-            directionCount={directionCount}
-            strokeWidth={strokeWidth}
-          >
-            {sampleText}
-          </StrokeText>
           <StrokeText
             textColor={textColor}
             strokeColor={strokeColor}
