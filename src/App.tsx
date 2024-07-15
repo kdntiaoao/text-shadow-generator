@@ -41,8 +41,8 @@ function App() {
   };
 
   return (
-    <div>
-      <div className="fixed bottom-0 left-0 top-0 w-96">
+    <div className="md:flex">
+      <div className="min-w-64 overflow-hidden md:sticky md:bottom-0 md:left-0 md:top-0 md:max-h-screen md:w-1/4 md:max-w-96 md:flex-shrink-0">
         <Sidebar
           fontWeight={fontWeight}
           textColor={textColor}
@@ -59,11 +59,19 @@ function App() {
         />
       </div>
 
-      <div className="pl-96">
+      <div className="">
         <div
           className="grid flex-1 gap-10 p-8 text-4xl font-bold"
           style={{ fontWeight }}
         >
+          <StrokeText
+            textColor={textColor}
+            strokeColor={strokeColor}
+            directionCount={directionCount}
+            strokeWidth={strokeWidth}
+          >
+            {sampleText}
+          </StrokeText>
           <StrokeText
             textColor={textColor}
             strokeColor={strokeColor}

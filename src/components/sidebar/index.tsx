@@ -52,7 +52,7 @@ text-shadow: ${generateTextShadow(strokeWidth, directionCount, 2)};
   };
 
   return (
-    <div className="bg-sidebar text-sidebar-foreground grid h-full place-content-start gap-10 overflow-y-auto px-4 py-8">
+    <div className="bg-sidebar text-sidebar-foreground grid h-full place-content-start gap-10 overflow-y-auto px-4 pt-8">
       <Header />
 
       <div className="relative">
@@ -162,8 +162,8 @@ text-shadow: ${generateTextShadow(strokeWidth, directionCount, 2)};
         </div>
 
         <div className="sticky bottom-0 left-0">
-          <div className="to-sidebar h-8 bg-gradient-to-b from-transparent" />
-          <div className="bg-sidebar grid gap-2">
+          <div className="to-sidebar h-10 bg-gradient-to-b from-transparent" />
+          <div className="bg-sidebar grid gap-2 pb-8">
             <p>コード</p>
             <CodeSnippet code={code} />
           </div>
