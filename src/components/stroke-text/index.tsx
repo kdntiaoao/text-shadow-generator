@@ -1,8 +1,10 @@
-import { useEffect, useRef, type CSSProperties } from "react";
+import { useRef, type CSSProperties } from "react";
 import { generateTextShadow } from "./generate-text-shadow";
+import styles from "./index.module.css";
 
 type Props = {
   children: string;
+  textColor: string;
   strokeColor: string;
   strokeWidth: number;
   directionCount?: number;
@@ -11,6 +13,7 @@ type Props = {
 
 export default function StrokeText({
   children,
+  textColor,
   strokeColor,
   strokeWidth,
   directionCount = Math.max(50, Math.min(500, strokeWidth * 10)),
@@ -18,14 +21,17 @@ export default function StrokeText({
 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {}, []);
-
   return (
-    <div ref={ref} className="relative">
+    <div
+      ref={ref}
+      className="relative whitespace-pre-wrap leading-normal tracking-wide"
+      style={{ color: textColor }}
+    >
       <div
+        className={styles.text}
         style={
           {
-            textShadow: generateTextShadow(
+            "--text-shadow": generateTextShadow(
               strokeWidth,
               directionCount,
               shadowInterval,
@@ -36,7 +42,7 @@ export default function StrokeText({
       >
         {children}
       </div>
-      <div className="absolute inset-0">{children}</div>
+      <div className="absolute inset-0 z-10">{children}</div>
     </div>
   );
 }
