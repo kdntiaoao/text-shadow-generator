@@ -4,7 +4,7 @@ import CustomSelect from "@/components/sidebar/custom-select";
 import { generateTextShadow } from "@/components/stroke-text/generate-text-shadow";
 import { Slider } from "@/components/ui/slider";
 import { Clipboard, ClipboardCheck } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 type Props = {
   fontWeight: FontWeight;
@@ -36,6 +36,7 @@ export default function Sidebar({
   onChangeStrokeColor,
 }: Props) {
   const [copyed, setCopyed] = useState(false);
+  const copyedTimerId = useRef<number>(0);
 
   const code = `text-shadow: ${generateTextShadow(strokeWidth, directionCount, 2)};\n--stroke-color: ${strokeColor};`;
 
@@ -47,15 +48,16 @@ export default function Sidebar({
   };
 
   const copyTextShadow = () => {
+    clearTimeout(copyedTimerId.current);
     navigator.clipboard.writeText(code);
     setCopyed(true);
-    setTimeout(() => {
+    copyedTimerId.current = window.setTimeout(() => {
       setCopyed(false);
     }, 1000);
   };
 
   return (
-    <div className="grid gap-10 px-4 py-8">
+    <div className="bg-sidebar text-sidebar-foreground grid h-full place-content-start gap-10 overflow-y-auto rounded-e-3xl px-4 py-8">
       <Header />
 
       <div className="grid gap-8">
@@ -86,7 +88,7 @@ export default function Sidebar({
           </span>
           <span
             aria-hidden="true"
-            className="block h-6 rounded border border-gray-400"
+            className="block h-6 rounded border border-input"
             style={{ backgroundColor: textColor }}
           />
           <input
@@ -135,7 +137,7 @@ export default function Sidebar({
           </span>
           <span
             aria-hidden="true"
-            className="block h-6 rounded border border-gray-400"
+            className="block h-6 rounded border border-input"
             style={{ backgroundColor: strokeColor }}
           />
           <input
@@ -153,14 +155,14 @@ export default function Sidebar({
           <div className="relative">
             <button
               data-clipboard
-              className="absolute right-1 top-1 rounded bg-foreground p-1 text-white hover:bg-slate-500"
-              aria-label="コピー"
+              className="bg-sidebar absolute right-1 top-1 rounded p-1 hover:opacity-80"
+              aria-label="クリップボードにコピーする"
               onClick={copyTextShadow}
             >
               {copyed ? <ClipboardCheck size={20} /> : <Clipboard size={20} />}
             </button>
             <pre className="grid">
-              <code className="block overflow-auto rounded bg-foreground p-4 pr-8 text-white">
+              <code className="block overflow-auto rounded border border-input bg-gray-800 p-4 pr-8">
                 {code}
               </code>
             </pre>

@@ -33,7 +33,7 @@ function App() {
 
   return (
     <div>
-      <div className="fixed bottom-0 left-0 top-0 w-96 overflow-y-auto border-r border-foreground">
+      <div className="fixed bottom-0 left-0 top-0 w-96">
         <Sidebar
           fontWeight={fontWeight}
           textColor={textColor}
@@ -50,7 +50,7 @@ function App() {
 
       <div className="pl-96">
         <div
-          className="grid flex-1 gap-10 p-8 text-4xl font-bold text-white"
+          className="grid flex-1 gap-10 p-8 text-4xl font-bold"
           style={{ fontWeight }}
         >
           <StrokeText
