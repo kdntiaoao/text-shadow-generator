@@ -24,7 +24,7 @@ export default function StrokeText({
   return (
     <div
       ref={ref}
-      className="relative leading-normal"
+      className="relative whitespace-pre-wrap leading-normal"
       style={{ color: textColor }}
     >
       <div
