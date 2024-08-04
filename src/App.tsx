@@ -71,6 +71,17 @@ function App() {
             strokeWidth={strokeWidth}
           >
             {sampleText}
+            {/* {sampleText +
+              "\n\n" +
+              sampleText +
+              "\n\n" +
+              sampleText +
+              "\n\n" +
+              sampleText +
+              "\n\n" +
+              sampleText +
+              "\n\n" +
+              sampleText} */}
           </StrokeText>
         </div>
       </div>
