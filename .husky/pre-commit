@@ -1,3 +1,4 @@
+tsc -b
 npm run prettier:fix
 npm run eslint
 git update-index --again
