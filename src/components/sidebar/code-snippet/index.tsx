@@ -22,7 +22,7 @@ export default function CodeSnippet({ code }: Props) {
     <div className="relative">
       <button
         data-clipboard
-        className="bg-sidebar absolute right-1 top-1 rounded p-1 hover:opacity-80"
+        className="absolute right-1 top-1 rounded bg-sidebar p-1 hover:opacity-80"
         aria-label="クリップボードにコピーする"
         onClick={copyTextShadow}
       >

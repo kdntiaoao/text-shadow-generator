@@ -1,0 +1,5 @@
+{
+  "excludeFiles": [
+    "./dist/**/*.html"
+  ]
+}
