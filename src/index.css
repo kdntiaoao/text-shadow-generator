@@ -6,38 +6,27 @@
   :root {
     --background: 257 64% 98%;
     --foreground: 202 73% 3%;
-
     --card: var(--background);
     --card-foreground: var(--background-foreground);
-
     --popover: var(--sidebar);
     --popover-foreground: var(--sidebar-foreground);
-
     --primary: 253 90% 50%;
     --primary-foreground: 0 0% 88%;
-
     --primary-light: 253 90% 70%;
     --primary-light-foreground: 215 55% 23%;
-
     --secondary: 350 71% 37%;
     --secondary-foreground: var(--primary-foreground);
-
     --muted: 0 0% 35%;
     --muted-foreground: 0 0% 63%;
-
     --accent: var(--primary);
     --accent-foreground: var(--primary-foreground);
-
     --destructive: 0 69% 58%;
     --destructive-foreground: var(--primary-foreground);
-
     --border: 0 0% 23%;
     --input: 0 0% 54%;
     --ring: var(--primary);
-
     --sidebar: 202 73% 3%; /* sidebar background color */
     --sidebar-foreground: 0 0% 88%; /* sidebar text color */
-
     --radius: 0.5rem;
   }
 }
@@ -46,6 +35,7 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply min-h-screen bg-background text-foreground;
   }
