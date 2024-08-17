@@ -10,7 +10,7 @@
     "build:server": "vite build --ssr src/entry-server.tsx --outDir dist/server",
     "generate": "vite build --ssrManifest .vite/ssr-manifest.json --outDir dist/static --mode production && npm run build:server && tsx prerender",
     "start": "serve dist/static",
-    "start:default": "serve -p 5432 _dist",
+    "start:default": "serve -p 5173 _dist",
     "eslint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "eslint:all": "eslint \"*.{js,jsx,mjs,cjs,ts,tsx}\"",
     "preview": "vite preview",

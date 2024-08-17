@@ -1,5 +1,10 @@
+/* The base layer is for things like reset rules or default styles applied to plain HTML elements. */
 @tailwind base;
+
+/* The components layer is for class-based styles that you want to be able to override with utilities. */
 @tailwind components;
+
+/* The utilities layer is for small, single-purpose classes that should always take precedence over any other styles. */
 @tailwind utilities;
 
 @layer base {
@@ -34,6 +39,10 @@
 @layer base {
   * {
     @apply border-border;
+  }
+
+  html {
+    @apply scrollbar-gutter-stable;
   }
 
   body {

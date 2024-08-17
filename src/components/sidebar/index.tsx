@@ -88,7 +88,7 @@ text-shadow: ${generateTextShadow(strokeWidth, directionCount, 2)};
   };
 
   return (
-    <div className="grid h-full place-content-start gap-10 overflow-y-auto bg-sidebar px-4 pt-8 text-sidebar-foreground md:min-h-screen">
+    <div className="scrollbar-gutter-stable grid h-full place-content-start gap-10 overflow-y-auto bg-sidebar px-4 pt-8 text-sidebar-foreground md:min-h-screen">
       <Header />
 
       <div className="relative">
