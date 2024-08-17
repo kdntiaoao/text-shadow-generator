@@ -24,6 +24,9 @@ type Props = {
   onChangeSampleText: (value: string) => void;
 };
 
+const KB = 1024;
+const MB = KB ** 2;
+
 const DEFAULT_OPTIONS = [
   { label: "2px", value: "2" },
   { label: "4px", value: "4" },
@@ -54,6 +57,17 @@ export default function Sidebar({
 font-weight: ${fontWeight};
 text-shadow: ${generateTextShadow(strokeWidth, directionCount, 2)};
 --stroke-color: ${strokeColor};`;
+
+  const size = new Blob([code]).size;
+  import.meta.env.DEV &&
+    console.log(
+      "size:",
+      size > MB
+        ? `${(size / MB).toFixed(1)} MB`
+        : size > KB
+          ? `${(size / KB).toFixed(1)} KB`
+          : `${size} bytes`,
+    );
 
   const defaultStrokeWidth =
     DEFAULT_VALUES.strokeWidth.toString() as `${typeof DEFAULT_VALUES.strokeWidth}`;
