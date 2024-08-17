@@ -6,6 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:server": "vite build --ssr src/entry-server.tsx --outDir dist/server",
+    "generate": "vite build --ssrManifest .vite/ssr-manifest.json --outDir dist/static --mode production && npm run build:server && tsx prerender",
+    "start": "serve dist/static",
+    "start2": "serve _dist",
     "eslint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "eslint:all": "eslint \"*.{js,jsx,mjs,cjs,ts,tsx}\"",
     "preview": "vite preview",
@@ -43,10 +47,12 @@
     "postcss": "^8.4.39",
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.5",
+    "serve": "^14.2.3",
     "stylelint": "^16.8.2",
     "stylelint-config-recess-order": "^5.0.1",
     "stylelint-config-standard": "^36.0.1",
     "tailwindcss": "^3.4.4",
+    "tsx": "^4.17.0",
     "typescript": "^5.2.2",
     "vite": "^5.3.1"
   }
