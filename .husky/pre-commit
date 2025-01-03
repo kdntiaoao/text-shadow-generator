@@ -1,5 +1,1 @@
-tsc -b
-npm run prettier
-npm run stylelint
-npm run eslint
-git update-index --again
+npx lint-staged
