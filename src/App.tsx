@@ -3,6 +3,8 @@ import Sidebar from '@/components/sidebar'
 import StrokeText from '@/components/stroke-text'
 import { DEFAULT_VALUES } from '@/constants/default-values'
 import type { FontWeight } from '@/types/values'
+import StrokeTextUpdated from '@/components/stroke-text-updated'
+import StrokeTextNew from '@/components/stroke-text-new'
 
 function App() {
   const [fontWeight, setFontWeight] = useState<FontWeight>(
@@ -66,17 +68,42 @@ function App() {
       </div>
 
       <div
-        className="grid flex-1 gap-10 p-8 text-4xl font-bold"
+        className="grid flex-1 gap-10 p-8 text-5xl font-bold"
         style={{ fontWeight }}
       >
-        <StrokeText
-          textColor={textColor}
-          strokeColor={strokeColor}
-          directionCount={directionCount}
-          strokeWidth={strokeWidth}
-        >
-          {sampleText}
-        </StrokeText>
+        <div>
+          <StrokeText
+            textColor={textColor}
+            strokeColor={strokeColor}
+            directionCount={directionCount}
+            strokeWidth={strokeWidth}
+          >
+            {sampleText}
+          </StrokeText>
+          <StrokeText
+            textColor={textColor}
+            strokeColor={strokeColor}
+            directionCount={64}
+            strokeWidth={8}
+          >
+            {sampleText}
+          </StrokeText>
+          <StrokeTextUpdated
+            width={8}
+            directionCount={128}
+            strokeColor={strokeColor}
+            textColor={textColor}
+          >
+            {sampleText}
+          </StrokeTextUpdated>
+          <StrokeTextNew
+            width={8}
+            strokeColor={strokeColor}
+            textColor={textColor}
+          >
+            {sampleText}
+          </StrokeTextNew>
+        </div>
       </div>
     </div>
   )

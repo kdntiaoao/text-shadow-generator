@@ -41,5 +41,7 @@ export const generateTextShadow = (
     }
   }
 
-  return shadows.join(',')
+  const result = shadows.join(',')
+  console.log('size:', new Blob([result]).size, 'bytes')
+  return result
 }

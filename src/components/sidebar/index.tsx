@@ -6,6 +6,7 @@ import { DEFAULT_VALUES } from '@/constants/default-values'
 import type { FontWeight } from '@/types/values'
 import ContentDefault from '@/components/sidebar/content-default'
 import ContentCustomize from '@/components/sidebar/content-customize'
+import CustomizeDialog from '@/components/sidebar/customize-dialog'
 
 type Props = {
   fontWeight: FontWeight
@@ -112,6 +113,15 @@ text-shadow: ${generateTextShadow(strokeWidth, directionCount, 2)};
           <div className="pointer-events-auto grid gap-2 bg-sidebar pb-8">
             <div className="flex items-center justify-between">
               <p>コード</p>
+              <div className="flex-shrink-0">
+                <CustomizeDialog
+                  fontWeight={fontWeight}
+                  textColor={textColor}
+                  strokeWidth={strokeWidth}
+                  directionCount={directionCount}
+                  strokeColor={strokeColor}
+                />
+              </div>
             </div>
             <CodeSnippet code={code} />
           </div>

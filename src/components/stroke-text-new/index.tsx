@@ -1,22 +1,18 @@
+import { generateTextShadow } from '@/components/stroke-text-new/generate-text-shadow'
 import { useRef, type CSSProperties } from 'react'
-import { generateTextShadow } from './generate-text-shadow'
 
 type Props = {
   children: string
   textColor: string
   strokeColor: string
-  strokeWidth: number
-  directionCount?: number
-  shadowInterval?: number
+  width: number
 }
 
-export default function StrokeText({
+export default function StrokeTextNew({
   children,
   textColor,
   strokeColor,
-  strokeWidth,
-  directionCount = Math.max(50, Math.min(500, strokeWidth * 10)),
-  shadowInterval = Math.max(1, strokeWidth / 10),
+  width,
 }: Props) {
   const ref = useRef<HTMLDivElement>(null)
 
@@ -29,12 +25,10 @@ export default function StrokeText({
       <div
         style={
           {
-            textShadow: generateTextShadow(
-              strokeWidth,
-              directionCount,
-              shadowInterval,
-            ),
-            '--stroke-color': strokeColor,
+            textShadow: generateTextShadow({
+              color: strokeColor,
+              width,
+            }),
           } as CSSProperties
         }
       >
