@@ -3,8 +3,6 @@ import Sidebar from '@/components/sidebar'
 import StrokeText from '@/components/stroke-text'
 import { DEFAULT_VALUES } from '@/constants/default-values'
 import type { FontWeight } from '@/types/values'
-import StrokeTextUpdated from '@/components/stroke-text-updated'
-import StrokeTextNew from '@/components/stroke-text-new'
 
 function App() {
   const [fontWeight, setFontWeight] = useState<FontWeight>(
@@ -73,36 +71,13 @@ function App() {
       >
         <div>
           <StrokeText
-            textColor={textColor}
-            strokeColor={strokeColor}
-            directionCount={directionCount}
             strokeWidth={strokeWidth}
+            directionCount={directionCount}
+            strokeColor={strokeColor}
+            textColor={textColor}
           >
             {sampleText}
           </StrokeText>
-          <StrokeText
-            textColor={textColor}
-            strokeColor={strokeColor}
-            directionCount={128}
-            strokeWidth={8}
-          >
-            {sampleText}
-          </StrokeText>
-          <StrokeTextUpdated
-            width={8}
-            directionCount={128}
-            strokeColor={strokeColor}
-            textColor={textColor}
-          >
-            {sampleText}
-          </StrokeTextUpdated>
-          <StrokeTextNew
-            width={8}
-            strokeColor={strokeColor}
-            textColor={textColor}
-          >
-            {sampleText}
-          </StrokeTextNew>
         </div>
       </div>
     </div>

@@ -43,7 +43,11 @@ export default function Sidebar({
 }: Props) {
   const code = `color: ${textColor};
 font-weight: ${fontWeight};
-text-shadow: ${generateTextShadow(strokeWidth, directionCount, 2)};
+text-shadow: ${generateTextShadow({
+    width: strokeWidth,
+    directionCount,
+    color: 'var(--stroke-color)',
+  })};
 --stroke-color: ${strokeColor};`
 
   const defaultStrokeWidth = DEFAULT_VALUES.strokeWidth.toString()

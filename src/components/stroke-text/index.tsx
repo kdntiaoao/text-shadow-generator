@@ -1,55 +1,40 @@
-import { useRef, type CSSProperties } from 'react'
+import type { CSSProperties } from 'react'
 import { generateTextShadow } from './generate-text-shadow'
 
 type Props = {
   children: string
-  textColor: string
-  strokeColor: string
   strokeWidth: number
-  directionCount?: number
-  shadowInterval?: number
+  directionCount: number
+  strokeColor: string
+  textColor: string
 }
 
 export default function StrokeText({
   children,
-  textColor,
-  strokeColor,
   strokeWidth,
-  directionCount = Math.max(50, Math.min(500, strokeWidth * 10)),
-  shadowInterval = Math.max(1, strokeWidth / 10),
+  directionCount,
+  strokeColor,
+  textColor,
 }: Props) {
-  const ref = useRef<HTMLDivElement>(null)
-
   return (
-    <>
+    <div
+      className="relative whitespace-pre-wrap leading-normal tracking-wide"
+      style={{ color: textColor }}
+    >
       <div
-        ref={ref}
-        className="relative whitespace-pre-wrap leading-normal tracking-wide"
-        style={{ color: textColor }}
+        style={
+          {
+            textShadow: generateTextShadow({
+              width: strokeWidth,
+              directionCount,
+              color: strokeColor,
+            }),
+          } as CSSProperties
+        }
       >
-        <div
-          style={
-            {
-              textShadow: generateTextShadow(
-                strokeWidth,
-                directionCount,
-                shadowInterval,
-              ),
-              '--stroke-color': strokeColor,
-            } as CSSProperties
-          }
-        >
-          {children}
-        </div>
-        <div className="absolute inset-0 z-10">{children}</div>
+        {children}
       </div>
-      <p className="text-lg font-normal">
-        size:{' '}
-        {new Blob([
-          generateTextShadow(strokeWidth, directionCount, shadowInterval),
-        ]).size.toLocaleString()}
-        bytes
-      </p>
-    </>
+      <div className="absolute inset-0 z-10">{children}</div>
+    </div>
   )
 }
