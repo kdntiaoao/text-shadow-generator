@@ -83,7 +83,7 @@ function App() {
           <StrokeText
             textColor={textColor}
             strokeColor={strokeColor}
-            directionCount={64}
+            directionCount={128}
             strokeWidth={8}
           >
             {sampleText}

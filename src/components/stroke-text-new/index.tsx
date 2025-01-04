@@ -17,24 +17,37 @@ export default function StrokeTextNew({
   const ref = useRef<HTMLDivElement>(null)
 
   return (
-    <div
-      ref={ref}
-      className="relative whitespace-pre-wrap leading-normal tracking-wide"
-      style={{ color: textColor }}
-    >
+    <>
       <div
-        style={
-          {
-            textShadow: generateTextShadow({
-              color: strokeColor,
-              width,
-            }),
-          } as CSSProperties
-        }
+        ref={ref}
+        className="relative whitespace-pre-wrap leading-normal tracking-wide"
+        style={{ color: textColor }}
       >
-        {children}
+        <div
+          style={
+            {
+              textShadow: generateTextShadow({
+                color: strokeColor,
+                width,
+              }),
+            } as CSSProperties
+          }
+        >
+          {children}
+        </div>
+        <div className="absolute inset-0 z-10">{children}</div>
       </div>
-      <div className="absolute inset-0 z-10">{children}</div>
-    </div>
+
+      <p className="text-lg font-normal">
+        size:{' '}
+        {new Blob([
+          generateTextShadow({
+            color: strokeColor,
+            width,
+          }),
+        ]).size.toLocaleString()}
+        bytes
+      </p>
+    </>
   )
 }
