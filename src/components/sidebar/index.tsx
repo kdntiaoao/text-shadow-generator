@@ -2,7 +2,6 @@ import Header from '@/components/header'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { DEFAULT_VALUES } from '@/constants/default-values'
 import type { FontWeight } from '@/types/values'
-import { generateTextShadow } from '@/utils/generate-text-shadow'
 import Codesnippet from './codesnippet'
 import ContentCustomize from './content-customize'
 import ContentDefault from './content-default'
@@ -16,6 +15,7 @@ type Props = {
   strokeColor: string
   shadowOffset: number
   sampleText: string
+  textShadow: string
   onChangeFontWeight: (value: FontWeight) => void
   onChangeTextColor: (value: string) => void
   onChangeStrokeWidth: (value: number) => void
@@ -37,6 +37,7 @@ export default function Sidebar({
   strokeColor,
   shadowOffset,
   sampleText,
+  textShadow,
   onChangeFontWeight,
   onChangeTextColor,
   onChangeStrokeWidth,
@@ -47,12 +48,7 @@ export default function Sidebar({
 }: Props) {
   const code = `color: ${textColor};
 font-weight: ${fontWeight};
-text-shadow: ${generateTextShadow({
-    width: strokeWidth,
-    directionCount,
-    color: 'var(--color)',
-    shadowOffset,
-  })};
+text-shadow: ${textShadow.replace(strokeColor, 'var(--color)')};
 --color: ${strokeColor};`
 
   const defaultStrokeWidth = DEFAULT_VALUES.strokeWidth.toString()

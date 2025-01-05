@@ -26,6 +26,13 @@ function App() {
     DEFAULT_VALUES.sampleText,
   )
 
+  const textShadow = generateTextShadow({
+    width: strokeWidth,
+    directionCount,
+    color: strokeColor,
+    shadowOffset,
+  })
+
   const handleChangeFontWeight = (value: FontWeight) => {
     setFontWeight(value)
   }
@@ -65,6 +72,7 @@ function App() {
           strokeColor={strokeColor}
           shadowOffset={shadowOffset}
           sampleText={sampleText}
+          textShadow={textShadow}
           onChangeFontWeight={handleChangeFontWeight}
           onChangeTextColor={handleChangeTextColor}
           onChangeStrokeWidth={handleChangeStrokeWidth}
@@ -80,15 +88,7 @@ function App() {
         style={{ fontWeight }}
       >
         <div>
-          <StrokeText
-            textColor={textColor}
-            textShadow={generateTextShadow({
-              width: strokeWidth,
-              directionCount,
-              color: strokeColor,
-              shadowOffset,
-            })}
-          >
+          <StrokeText textColor={textColor} textShadow={textShadow}>
             {sampleText}
           </StrokeText>
         </div>

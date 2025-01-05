@@ -14,7 +14,7 @@ export const generateTextShadow = ({
   color = '#000',
   shadowOffset = 0,
 }: Params): string => {
-  const shadows: string[] = []
+  const shadows: Set<string> = new Set()
 
   let radius = 0
   while (radius < width) {
@@ -34,18 +34,18 @@ export const generateTextShadow = ({
           : Math.round(radius * Math.sin(angle))
       const valueX = x === 0 ? '0' : `${x}px`
       const valueY = y === 0 ? '0' : `${y}px`
-      shadows.push(`${valueX} ${valueY} 0 ${color}`)
+      shadows.add(`${valueX} ${valueY} 0 ${color}`)
       if (shadowOffset) {
         const shadowX = x + shadowOffset
         const shadowY = y + shadowOffset
         const valueShadowX = shadowX === 0 ? '0' : `${shadowX}px`
         const valueShadowY = shadowY === 0 ? '0' : `${shadowY}px`
-        shadows.push(`${valueShadowX} ${valueShadowY} 0 ${color}`)
+        shadows.add(`${valueShadowX} ${valueShadowY} 0 ${color}`)
       }
     }
   }
 
-  const result = [...new Set(shadows)].join(',')
+  const result = [...shadows].join(',')
   console.log('size:', new Blob([result]).size.toLocaleString(), 'bytes')
   return result
 }

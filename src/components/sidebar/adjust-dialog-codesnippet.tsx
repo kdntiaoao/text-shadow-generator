@@ -5,7 +5,7 @@ type Props = {
   textShadowValues: string[]
   textShadowResult: string
   target: string | null
-  disabledValues: string[]
+  disabledValues: Set<string> | null
   onMouseEnter: (value: string) => void
   onMouseLeave: (value: string) => void
   onFocus: (value: string) => void
@@ -38,7 +38,7 @@ export default function AdjustDialogCodesnippet({
   }
 
   return (
-    <div className="relative rounded border border-input">
+    <div className="relative overflow-hidden rounded border border-gray-400">
       <button
         data-clipboard
         className="absolute right-0 top-0 rounded bg-gray-300 p-1 hover:opacity-80"
@@ -58,7 +58,7 @@ export default function AdjustDialogCodesnippet({
                 tabIndex={0}
                 className="cursor-pointer transition-colors"
                 style={{
-                  opacity: disabledValues.includes(textItem) ? 0.5 : undefined,
+                  opacity: disabledValues?.has(textItem) ? 0.5 : undefined,
                   backgroundColor:
                     target === textItem ? 'rgb(254, 202, 202)' : undefined,
                 }}
@@ -75,7 +75,7 @@ export default function AdjustDialogCodesnippet({
           ;
         </span>
       </code>
-      <div className="absolute bottom-0 left-0 h-4 w-full bg-gradient-to-t from-background to-transparent"></div>
+      <div className="pointer-events-none absolute bottom-0 left-0 h-4 w-full bg-gradient-to-t from-background to-transparent"></div>
     </div>
   )
 }

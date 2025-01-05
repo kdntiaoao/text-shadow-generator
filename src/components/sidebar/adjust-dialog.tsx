@@ -31,7 +31,7 @@ export default function AdjustDialog({
 }: Props) {
   const ref = useRef<HTMLDivElement>(null)
   const [target, setTarget] = useState<string | null>(null)
-  const [disabledValues, setDisabledValues] = useState<string[]>([])
+  const [disabledValues, setDisabledValues] = useState<Set<string> | null>(null)
 
   const textShadowValues = generateTextShadow({
     width: strokeWidth,
@@ -42,7 +42,7 @@ export default function AdjustDialog({
 
   const getTextShadowResult = () => {
     const result = textShadowValues
-      .filter((t) => !disabledValues.includes(t))
+      .filter((t) => !disabledValues?.has(t))
       .filter((t) => t !== target)
     if (target) {
       result.unshift(target.split(' ').slice(0, 3).join(' ') + ' red')
@@ -72,13 +72,19 @@ export default function AdjustDialog({
   }
 
   const toggleState = (value: string) => {
-    setDisabledValues((prev) =>
-      prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value],
-    )
+    setDisabledValues((prev) => {
+      const newDisabledValues = new Set(prev)
+      if (prev?.has(value)) {
+        newDisabledValues.delete(value)
+      } else {
+        newDisabledValues.add(value)
+      }
+      return newDisabledValues
+    })
   }
 
   const reset = () => {
-    setDisabledValues([])
+    setDisabledValues(null)
   }
 
   return (
