@@ -18,6 +18,7 @@ type Props = {
   strokeWidth: number
   directionCount: number
   strokeColor: string
+  shadowOffset: number
 }
 
 export default function AdjustDialog({
@@ -26,6 +27,7 @@ export default function AdjustDialog({
   strokeWidth,
   directionCount,
   strokeColor,
+  shadowOffset,
 }: Props) {
   const ref = useRef<HTMLDivElement>(null)
   const [target, setTarget] = useState<string | null>(null)
@@ -35,6 +37,7 @@ export default function AdjustDialog({
     width: strokeWidth,
     directionCount,
     color: 'var(--color)',
+    shadowOffset,
   }).split(/,\s*/)
 
   const getTextShadowResult = () => {

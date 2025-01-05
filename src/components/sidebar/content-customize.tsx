@@ -3,78 +3,40 @@ import { Textarea } from '@/components/ui/textarea'
 import CustomSelect from './custom-select'
 
 type Props = {
-  fontWeight: number
-  textColor: string
   strokeWidth: number
   directionCount: number
   strokeColor: string
+  shadowOffset: number
+  textColor: string
+  fontWeight: number
   sampleText: string
-  onChangeFontWeight: (value: string) => void
-  onChangeTextColor: (value: string) => void
   onChangeStrokeWidth: (value: number) => void
   onChangeDirectionCount: (value: number) => void
   onChangeStrokeColor: (value: string) => void
+  onChangeShadowOffset: (value: number) => void
+  onChangeTextColor: (value: string) => void
+  onChangeFontWeight: (value: string) => void
   onChangeSampleText: (value: string) => void
 }
 
 export default function ContentCustomize({
-  fontWeight,
-  textColor,
   strokeWidth,
   directionCount,
   strokeColor,
+  shadowOffset,
+  textColor,
+  fontWeight,
   sampleText,
-  onChangeFontWeight,
-  onChangeTextColor,
   onChangeStrokeWidth,
   onChangeDirectionCount,
   onChangeStrokeColor,
+  onChangeShadowOffset,
+  onChangeTextColor,
+  onChangeFontWeight,
   onChangeSampleText,
 }: Props) {
   return (
-    <div className="grid gap-8 py-4">
-      <div className="grid gap-2">
-        <label htmlFor="font-weight-select">
-          文字の太さ: <code>{fontWeight}</code>
-        </label>
-        <CustomSelect
-          defaultValue={fontWeight.toString()}
-          options={[
-            { label: '100', value: '100' },
-            { label: '200', value: '200' },
-            { label: '300', value: '300' },
-            { label: '400', value: '400' },
-            { label: '500', value: '500' },
-            { label: '600', value: '600' },
-            { label: '700', value: '700' },
-            { label: '800', value: '800' },
-            { label: '900', value: '900' },
-          ]}
-          onChange={onChangeFontWeight}
-        />
-      </div>
-
-      <label
-        htmlFor="text-color-input"
-        className="relative grid cursor-pointer gap-2"
-      >
-        <span>
-          文字の色: <code>{textColor}</code>
-        </span>
-        <span
-          aria-hidden="true"
-          className="block h-6 rounded border border-input"
-          style={{ backgroundColor: textColor }}
-        />
-        <input
-          id="text-color-input"
-          type="color"
-          value={textColor}
-          className="sr-only bottom-0"
-          onChange={(e) => onChangeTextColor(e.target.value)}
-        />
-      </label>
-
+    <div className="grid gap-8 py-8">
       <div className="grid gap-2">
         <label htmlFor="stroke-width-slider">
           枠線の太さ: <code>{strokeWidth}px</code>
@@ -86,7 +48,6 @@ export default function ContentCustomize({
           max={40}
           step={1}
           onValueChange={([value]) => onChangeStrokeWidth(value)}
-          aria-labelledby="stroke-width-slider"
         />
       </div>
 
@@ -101,7 +62,20 @@ export default function ContentCustomize({
           max={200}
           step={1}
           onValueChange={([value]) => onChangeDirectionCount(value)}
-          aria-labelledby="direction-count-slider"
+        />
+      </div>
+
+      <div className="grid gap-2">
+        <label htmlFor="shadow-offset-slider">
+          影をずらす距離: <code>{shadowOffset}px</code>
+        </label>
+        <Slider
+          id="shadow-offset-slider"
+          defaultValue={[shadowOffset]}
+          min={0}
+          max={20}
+          step={1}
+          onValueChange={([value]) => onChangeShadowOffset(value)}
         />
       </div>
 
@@ -125,6 +99,48 @@ export default function ContentCustomize({
           onChange={(e) => onChangeStrokeColor(e.target.value)}
         />
       </label>
+
+      <label
+        htmlFor="text-color-input"
+        className="relative grid cursor-pointer gap-2"
+      >
+        <span>
+          文字の色: <code>{textColor}</code>
+        </span>
+        <span
+          aria-hidden="true"
+          className="block h-6 rounded border border-input"
+          style={{ backgroundColor: textColor }}
+        />
+        <input
+          id="text-color-input"
+          type="color"
+          value={textColor}
+          className="sr-only bottom-0"
+          onChange={(e) => onChangeTextColor(e.target.value)}
+        />
+      </label>
+
+      <div className="grid gap-2">
+        <label htmlFor="font-weight-select">
+          文字の太さ: <code>{fontWeight}</code>
+        </label>
+        <CustomSelect
+          defaultValue={fontWeight.toString()}
+          options={[
+            { label: '100', value: '100' },
+            { label: '200', value: '200' },
+            { label: '300', value: '300' },
+            { label: '400', value: '400' },
+            { label: '500', value: '500' },
+            { label: '600', value: '600' },
+            { label: '700', value: '700' },
+            { label: '800', value: '800' },
+            { label: '900', value: '900' },
+          ]}
+          onChange={onChangeFontWeight}
+        />
+      </div>
 
       <div className="grid gap-2">
         <label htmlFor="sample-text-input">サンプルテキスト</label>

@@ -3,6 +3,7 @@ import Sidebar from '@/components/sidebar'
 import StrokeText from '@/components/stroke-text'
 import { DEFAULT_VALUES } from '@/constants/default-values'
 import type { FontWeight } from '@/types/values'
+import { generateTextShadow } from '@/utils/generate-text-shadow'
 
 function App() {
   const [fontWeight, setFontWeight] = useState<FontWeight>(
@@ -17,6 +18,9 @@ function App() {
   )
   const [strokeColor, setStrokeColor] = useState<string>(
     DEFAULT_VALUES.strokeColor,
+  )
+  const [shadowOffset, setShadowOffset] = useState<number>(
+    DEFAULT_VALUES.shadowOffset,
   )
   const [sampleText, setSampleText] = useState<string>(
     DEFAULT_VALUES.sampleText,
@@ -42,6 +46,10 @@ function App() {
     setStrokeColor(value)
   }
 
+  const handleShadowOffsetChange = (value: number) => {
+    setShadowOffset(value)
+  }
+
   const handleSampleTextChange = (value: string) => {
     setSampleText(value)
   }
@@ -55,12 +63,14 @@ function App() {
           strokeWidth={strokeWidth}
           directionCount={directionCount}
           strokeColor={strokeColor}
+          shadowOffset={shadowOffset}
           sampleText={sampleText}
           onChangeFontWeight={handleChangeFontWeight}
           onChangeTextColor={handleChangeTextColor}
           onChangeStrokeWidth={handleChangeStrokeWidth}
           onChangeDirectionCount={handleChangeDirectionCount}
           onChangeStrokeColor={handleChangeStrokeColor}
+          onChangeShadowOffset={handleShadowOffsetChange}
           onChangeSampleText={handleSampleTextChange}
         />
       </div>
@@ -71,10 +81,13 @@ function App() {
       >
         <div>
           <StrokeText
-            strokeWidth={strokeWidth}
-            directionCount={directionCount}
-            strokeColor={strokeColor}
             textColor={textColor}
+            textShadow={generateTextShadow({
+              width: strokeWidth,
+              directionCount,
+              color: strokeColor,
+              shadowOffset,
+            })}
           >
             {sampleText}
           </StrokeText>

@@ -12,6 +12,7 @@ export const generateTextShadow = ({
   width,
   directionCount = Math.max(50, Math.min(500, width * 10)),
   color = '#000',
+  shadowOffset = 0,
 }: Params): string => {
   const shadows: string[] = []
 
@@ -23,11 +24,24 @@ export const generateTextShadow = ({
       angle < 2 * Math.PI;
       angle += (2 * Math.PI) / directionCount
     ) {
-      const x = Math.round(radius * Math.cos(angle) * 10) / 10
-      const y = Math.round(radius * Math.sin(angle) * 10) / 10
+      const x =
+        radius === width
+          ? Math.round(radius * Math.cos(angle) * 10) / 10
+          : Math.round(radius * Math.cos(angle))
+      const y =
+        radius === width
+          ? Math.round(radius * Math.sin(angle) * 10) / 10
+          : Math.round(radius * Math.sin(angle))
       const valueX = x === 0 ? '0' : `${x}px`
       const valueY = y === 0 ? '0' : `${y}px`
       shadows.push(`${valueX} ${valueY} 0 ${color}`)
+      if (shadowOffset) {
+        const shadowX = x + shadowOffset
+        const shadowY = y + shadowOffset
+        const valueShadowX = shadowX === 0 ? '0' : `${shadowX}px`
+        const valueShadowY = shadowY === 0 ? '0' : `${shadowY}px`
+        shadows.push(`${valueShadowX} ${valueShadowY} 0 ${color}`)
+      }
     }
   }
 

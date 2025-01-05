@@ -14,12 +14,14 @@ type Props = {
   strokeWidth: number
   directionCount: number
   strokeColor: string
+  shadowOffset: number
   sampleText: string
   onChangeFontWeight: (value: FontWeight) => void
   onChangeTextColor: (value: string) => void
   onChangeStrokeWidth: (value: number) => void
   onChangeDirectionCount: (value: number) => void
   onChangeStrokeColor: (value: string) => void
+  onChangeShadowOffset: (value: number) => void
   onChangeSampleText: (value: string) => void
 }
 
@@ -33,12 +35,14 @@ export default function Sidebar({
   strokeWidth,
   directionCount,
   strokeColor,
+  shadowOffset,
   sampleText,
   onChangeFontWeight,
   onChangeTextColor,
   onChangeStrokeWidth,
   onChangeDirectionCount,
   onChangeStrokeColor,
+  onChangeShadowOffset,
   onChangeSampleText,
 }: Props) {
   const code = `color: ${textColor};
@@ -47,6 +51,7 @@ text-shadow: ${generateTextShadow({
     width: strokeWidth,
     directionCount,
     color: 'var(--color)',
+    shadowOffset,
   })};
 --color: ${strokeColor};`
 
@@ -55,12 +60,12 @@ text-shadow: ${generateTextShadow({
   const handleChangeDefaultStrokeWidth = (value: string) => {
     const num = Number(value)
     if (!Number.isNaN(num)) {
-      const directionCount = num < 6 ? 32 : 64
       onChangeFontWeight(DEFAULT_VALUES.fontWeight)
       onChangeTextColor(DEFAULT_VALUES.textColor)
       onChangeStrokeWidth(num)
-      onChangeDirectionCount(directionCount)
+      onChangeDirectionCount(DEFAULT_VALUES.directionCount)
       onChangeStrokeColor(DEFAULT_VALUES.strokeColor)
+      onChangeShadowOffset(DEFAULT_VALUES.shadowOffset)
       onChangeSampleText(DEFAULT_VALUES.sampleText)
     }
   }
@@ -101,12 +106,14 @@ text-shadow: ${generateTextShadow({
               strokeWidth={strokeWidth}
               directionCount={directionCount}
               strokeColor={strokeColor}
+              shadowOffset={shadowOffset}
               sampleText={sampleText}
               onChangeFontWeight={handleChangeFontWeight}
               onChangeTextColor={onChangeTextColor}
               onChangeStrokeWidth={onChangeStrokeWidth}
               onChangeDirectionCount={onChangeDirectionCount}
               onChangeStrokeColor={onChangeStrokeColor}
+              onChangeShadowOffset={onChangeShadowOffset}
               onChangeSampleText={onChangeSampleText}
             />
           </TabsContent>
@@ -124,10 +131,14 @@ text-shadow: ${generateTextShadow({
                   strokeWidth={strokeWidth}
                   directionCount={directionCount}
                   strokeColor={strokeColor}
+                  shadowOffset={shadowOffset}
                 />
               </div>
             </div>
             <Codesnippet code={code} />
+            <p className="text-right">
+              {new Blob([code]).size.toLocaleString()} bytes
+            </p>
           </div>
         </div>
       </div>
