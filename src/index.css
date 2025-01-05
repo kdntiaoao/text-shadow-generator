@@ -28,6 +28,8 @@
     --sidebar: 202 73% 3%; /* sidebar background color */
     --sidebar-foreground: 0 0% 88%; /* sidebar text color */
     --radius: 0.5rem;
+    --neutral: 0 0% 35%;
+    --neutral-foreground: 0 0% 98%;
   }
 }
 

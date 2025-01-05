@@ -1,5 +1,5 @@
-import { CSSProperties, Fragment, useRef, useState } from 'react'
-import { generateTextShadow } from '@/components/stroke-text/generate-text-shadow'
+import { CSSProperties, useRef, useState } from 'react'
+import { generateTextShadow } from '@/utils/generate-text-shadow'
 import {
   Dialog,
   DialogContent,
@@ -8,7 +8,9 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { FontWeight } from '@/types/values'
-import { Settings } from 'lucide-react'
+import { RotateCcw, Settings } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import AdjustDialogCodesnippet from './adjust-dialog-codesnippet'
 
 type Props = {
   fontWeight: FontWeight
@@ -18,7 +20,7 @@ type Props = {
   strokeColor: string
 }
 
-export default function CustomizeDialog({
+export default function AdjustDialog({
   fontWeight,
   textColor,
   strokeWidth,
@@ -32,8 +34,8 @@ export default function CustomizeDialog({
   const textShadowValues = generateTextShadow({
     width: strokeWidth,
     directionCount,
-    color: strokeColor,
-  }).split(', ')
+    color: 'var(--color)',
+  }).split(/,\s*/)
 
   const getTextShadowResult = () => {
     const result = textShadowValues
@@ -42,8 +44,9 @@ export default function CustomizeDialog({
     if (target) {
       result.unshift(target.split(' ').slice(0, 3).join(' ') + ' red')
     }
-    return result.join(', ')
+    return result.join(',')
   }
+  const textShadowResult = getTextShadowResult()
 
   const handleMouseEnter = (value: string) => {
     const textShadowValueElements = ref.current?.querySelectorAll('span')
@@ -65,10 +68,14 @@ export default function CustomizeDialog({
     setTarget((prev) => (prev === value ? null : prev))
   }
 
-  const handleClick = (value: string) => {
+  const toggleState = (value: string) => {
     setDisabledValues((prev) =>
       prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value],
     )
+  }
+
+  const reset = () => {
+    setDisabledValues([])
   }
 
   return (
@@ -81,47 +88,34 @@ export default function CustomizeDialog({
         <DialogDescription className="sr-only">
           text-shadowの値で不要なものを非表示にしてください。
         </DialogDescription>
-        <div className="text-center text-8xl" style={{ fontWeight }}>
+        <div className="text-center text-9xl" style={{ fontWeight }}>
           <div
             style={
               {
                 color: textColor,
-                textShadow: getTextShadowResult(),
+                textShadow: textShadowResult,
+                '--color': strokeColor,
               } as CSSProperties
             }
           >
-            hello
+            A
           </div>
         </div>
-        <div className="relative rounded border border-input">
-          <code className="block max-h-64 overflow-auto p-4">
-            text-shadow:
-            <br />
-            <span ref={ref} className="block pl-4 text-justify">
-              {textShadowValues.map((textItem, i) => (
-                <Fragment key={i}>
-                  {i !== 0 && ', '}
-                  <span
-                    tabIndex={0}
-                    className="cursor-pointer transition-colors focus-within:bg-red-200 hover:bg-red-200"
-                    style={
-                      disabledValues.includes(textItem)
-                        ? { opacity: 0.5 }
-                        : undefined
-                    }
-                    onMouseEnter={() => handleMouseEnter(textItem)}
-                    onMouseLeave={() => handleMouseLeave(textItem)}
-                    onFocus={() => handleFocus(textItem)}
-                    onBlur={() => handleBlur(textItem)}
-                    onClick={() => handleClick(textItem)}
-                  >
-                    {textItem}
-                  </span>
-                </Fragment>
-              ))}
-            </span>
-          </code>
-          <div className="absolute bottom-0 left-0 h-4 w-full bg-gradient-to-t from-background to-transparent"></div>
+        <AdjustDialogCodesnippet
+          textShadowValues={textShadowValues}
+          textShadowResult={textShadowResult}
+          target={target}
+          disabledValues={disabledValues}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          onClick={toggleState}
+        />
+        <div className="ml-auto">
+          <Button variant="neutral" size="sm" onClick={reset}>
+            <RotateCcw size={16} /> Reset
+          </Button>
         </div>
       </DialogContent>
     </Dialog>

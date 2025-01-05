@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react'
-import { generateTextShadow } from './generate-text-shadow'
+import { generateTextShadow } from '@/utils/generate-text-shadow'
 
 type Props = {
   children: string

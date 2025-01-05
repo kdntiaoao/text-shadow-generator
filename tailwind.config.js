@@ -51,6 +51,10 @@ export default {
           DEFAULT: 'hsl(var(--sidebar))',
           foreground: 'hsl(var(--sidebar-foreground))',
         },
+        neutral: {
+          DEFAULT: 'hsl(var(--neutral))',
+          foreground: 'hsl(var(--neutral-foreground))',
+        },
       },
     },
   },

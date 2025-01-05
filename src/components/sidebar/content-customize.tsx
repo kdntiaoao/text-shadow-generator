@@ -1,6 +1,6 @@
-import CustomSelect from '@/components/sidebar/custom-select'
 import { Slider } from '@/components/ui/slider'
 import { Textarea } from '@/components/ui/textarea'
+import CustomSelect from './custom-select'
 
 type Props = {
   fontWeight: number

@@ -25,11 +25,13 @@ export const generateTextShadow = ({
     ) {
       const x = Math.round(radius * Math.cos(angle) * 10) / 10
       const y = Math.round(radius * Math.sin(angle) * 10) / 10
-      shadows.push(`${x}px ${y}px 0 ${color}`)
+      const valueX = x === 0 ? '0' : `${x}px`
+      const valueY = y === 0 ? '0' : `${y}px`
+      shadows.push(`${valueX} ${valueY} 0 ${color}`)
     }
   }
 
-  const result = [...new Set(shadows)].join(', ')
+  const result = [...new Set(shadows)].join(',')
   console.log('size:', new Blob([result]).size.toLocaleString(), 'bytes')
   return result
 }

@@ -1,12 +1,12 @@
 import Header from '@/components/header'
-import CodeSnippet from '@/components/sidebar/code-snippet'
-import { generateTextShadow } from '@/components/stroke-text/generate-text-shadow'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { DEFAULT_VALUES } from '@/constants/default-values'
 import type { FontWeight } from '@/types/values'
-import ContentDefault from '@/components/sidebar/content-default'
-import ContentCustomize from '@/components/sidebar/content-customize'
-import CustomizeDialog from '@/components/sidebar/customize-dialog'
+import { generateTextShadow } from '@/utils/generate-text-shadow'
+import Codesnippet from './codesnippet'
+import ContentCustomize from './content-customize'
+import ContentDefault from './content-default'
+import CustomizeDialog from './adjust-dialog'
 
 type Props = {
   fontWeight: FontWeight
@@ -46,9 +46,9 @@ font-weight: ${fontWeight};
 text-shadow: ${generateTextShadow({
     width: strokeWidth,
     directionCount,
-    color: 'var(--stroke-color)',
+    color: 'var(--color)',
   })};
---stroke-color: ${strokeColor};`
+--color: ${strokeColor};`
 
   const defaultStrokeWidth = DEFAULT_VALUES.strokeWidth.toString()
 
@@ -127,7 +127,7 @@ text-shadow: ${generateTextShadow({
                 />
               </div>
             </div>
-            <CodeSnippet code={code} />
+            <Codesnippet code={code} />
           </div>
         </div>
       </div>
