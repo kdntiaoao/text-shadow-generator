@@ -104,17 +104,22 @@ export default function AdjustDialog({
             A
           </div>
         </div>
-        <AdjustDialogCodesnippet
-          textShadowValues={textShadowValues}
-          textShadowResult={textShadowResult}
-          target={target}
-          disabledValues={disabledValues}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          onClick={toggleState}
-        />
+        <div>
+          <AdjustDialogCodesnippet
+            textShadowValues={textShadowValues}
+            textShadowResult={textShadowResult}
+            target={target}
+            disabledValues={disabledValues}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            onClick={toggleState}
+          />
+          <p className="text-right">
+            {new Blob([textShadowResult]).size.toLocaleString()} bytes
+          </p>
+        </div>
         <div className="ml-auto">
           <Button variant="neutral" size="sm" onClick={reset}>
             <RotateCcw size={16} /> Reset

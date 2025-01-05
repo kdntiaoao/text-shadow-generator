@@ -38,7 +38,7 @@ export default function AdjustDialogCodesnippet({
   }
 
   return (
-    <div className="relative max-h-64 rounded border border-input">
+    <div className="relative rounded border border-input">
       <button
         data-clipboard
         className="absolute right-0 top-0 rounded bg-gray-300 p-1 hover:opacity-80"
@@ -47,7 +47,7 @@ export default function AdjustDialogCodesnippet({
       >
         {copyed ? <ClipboardCheck size={20} /> : <Clipboard size={20} />}
       </button>
-      <code className="block h-full overflow-auto p-4">
+      <code className="block max-h-64 overflow-auto p-4">
         text-shadow:
         <br />
         <span ref={ref} className="block pl-4 text-justify">
