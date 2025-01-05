@@ -4,16 +4,16 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select'
 
 type Props = {
-  defaultValue: string;
+  defaultValue: string
   options: {
-    label: string;
-    value: string;
-  }[];
-  onChange: (value: string) => void;
-};
+    label: string
+    value: string
+  }[]
+  onChange: (value: string) => void
+}
 
 export default function CustomSelect({
   defaultValue,
@@ -33,5 +33,5 @@ export default function CustomSelect({
         ))}
       </SelectContent>
     </Select>
-  );
+  )
 }

@@ -1,50 +1,50 @@
-import Sidebar from "@/components/sidebar";
-import StrokeText from "@/components/stroke-text";
-import { DEFAULT_VALUES } from "@/constants/default-values";
-import type { FontWeight } from "@/types/values";
-import { useState } from "react";
+import { useState } from 'react'
+import Sidebar from '@/components/sidebar'
+import StrokeText from '@/components/stroke-text'
+import { DEFAULT_VALUES } from '@/constants/default-values'
+import type { FontWeight } from '@/types/values'
 
 function App() {
   const [fontWeight, setFontWeight] = useState<FontWeight>(
     DEFAULT_VALUES.fontWeight,
-  );
-  const [textColor, setTextColor] = useState<string>(DEFAULT_VALUES.textColor);
+  )
+  const [textColor, setTextColor] = useState<string>(DEFAULT_VALUES.textColor)
   const [strokeWidth, setStrokeWidth] = useState<number>(
     DEFAULT_VALUES.strokeWidth,
-  );
+  )
   const [directionCount, setDirectionCount] = useState<number>(
     DEFAULT_VALUES.directionCount,
-  );
+  )
   const [strokeColor, setStrokeColor] = useState<string>(
     DEFAULT_VALUES.strokeColor,
-  );
+  )
   const [sampleText, setSampleText] = useState<string>(
     DEFAULT_VALUES.sampleText,
-  );
+  )
 
   const handleChangeFontWeight = (value: FontWeight) => {
-    setFontWeight(value);
-  };
+    setFontWeight(value)
+  }
 
   const handleChangeTextColor = (value: string) => {
-    setTextColor(value);
-  };
+    setTextColor(value)
+  }
 
   const handleChangeStrokeWidth = (value: number) => {
-    setStrokeWidth(value);
-  };
+    setStrokeWidth(value)
+  }
 
   const handleChangeDirectionCount = (value: number) => {
-    setDirectionCount(value);
-  };
+    setDirectionCount(value)
+  }
 
   const handleChangeStrokeColor = (value: string) => {
-    setStrokeColor(value);
-  };
+    setStrokeColor(value)
+  }
 
   const handleSampleTextChange = (value: string) => {
-    setSampleText(value);
-  };
+    setSampleText(value)
+  }
 
   return (
     <div className="md:flex">
@@ -66,20 +66,22 @@ function App() {
       </div>
 
       <div
-        className="grid flex-1 gap-10 p-8 text-4xl font-bold"
+        className="grid flex-1 gap-10 p-8 text-5xl font-bold"
         style={{ fontWeight }}
       >
-        <StrokeText
-          textColor={textColor}
-          strokeColor={strokeColor}
-          directionCount={directionCount}
-          strokeWidth={strokeWidth}
-        >
-          {sampleText}
-        </StrokeText>
+        <div>
+          <StrokeText
+            strokeWidth={strokeWidth}
+            directionCount={directionCount}
+            strokeColor={strokeColor}
+            textColor={textColor}
+          >
+            {sampleText}
+          </StrokeText>
+        </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
