@@ -1,81 +1,86 @@
 import { Slider } from '@/components/ui/slider'
 import { Textarea } from '@/components/ui/textarea'
 import CustomSelect from './custom-select'
+import { valuesAtom } from '@/states/values'
+import { useAtom } from 'jotai'
+import { validateFontWeight } from '@/utils/validate-font-weight'
 
-type Props = {
-  strokeWidth: number
-  directionCount: number
-  strokeColor: string
-  shadowOffset: number
-  textColor: string
-  fontWeight: number
-  sampleText: string
-  onChangeStrokeWidth: (value: number) => void
-  onChangeDirectionCount: (value: number) => void
-  onChangeStrokeColor: (value: string) => void
-  onChangeShadowOffset: (value: number) => void
-  onChangeTextColor: (value: string) => void
-  onChangeFontWeight: (value: string) => void
-  onChangeSampleText: (value: string) => void
-}
+export default function ContentCustomize() {
+  const [values, setValues] = useAtom(valuesAtom)
 
-export default function ContentCustomize({
-  strokeWidth,
-  directionCount,
-  strokeColor,
-  shadowOffset,
-  textColor,
-  fontWeight,
-  sampleText,
-  onChangeStrokeWidth,
-  onChangeDirectionCount,
-  onChangeStrokeColor,
-  onChangeShadowOffset,
-  onChangeTextColor,
-  onChangeFontWeight,
-  onChangeSampleText,
-}: Props) {
+  const handleChangeStrokeWidth = (value: number) => {
+    setValues((prev) => ({ ...prev, strokeWidth: value }))
+  }
+
+  const handleChangeDirectionCount = (value: number) => {
+    setValues((prev) => ({ ...prev, directionCount: value }))
+  }
+
+  const handleChangeShadowOffset = (value: number) => {
+    setValues((prev) => ({ ...prev, shadowOffset: value }))
+  }
+
+  const handleChangeStrokeColor = (value: string) => {
+    setValues((prev) => ({ ...prev, strokeColor: value }))
+  }
+
+  const handleChangeTextColor = (value: string) => {
+    setValues((prev) => ({ ...prev, textColor: value }))
+  }
+
+  const handleChangeFontWeight = (value: string) => {
+    const fontWeight = Number(value)
+    if (validateFontWeight(fontWeight)) {
+      setValues((prev) => ({ ...prev, fontWeight }))
+    }
+  }
+
+  const handleChangeSampleText = (value: string) => {
+    setValues((prev) => ({ ...prev, sampleText: value }))
+  }
+
   return (
     <div className="grid gap-8 py-8">
       <div className="grid gap-2">
         <label htmlFor="stroke-width-slider">
-          枠線の太さ: <code>{strokeWidth}px</code>
+          枠線の太さ: <code>{values.strokeWidth}px</code>
         </label>
         <Slider
           id="stroke-width-slider"
-          defaultValue={[strokeWidth]}
+          defaultValue={[values.strokeWidth]}
           min={1}
           max={40}
           step={1}
-          onValueChange={([value]) => onChangeStrokeWidth(value)}
+          onValueChange={([value]) => handleChangeStrokeWidth(value)}
         />
       </div>
 
       <div className="grid gap-2">
         <label htmlFor="direction-count-slider">
-          <code>text-shadow</code>の方向の数: <code>{directionCount}</code>
+          <code>text-shadow</code>の方向の数:{' '}
+          <code>{values.directionCount}</code>
         </label>
         <Slider
           id="direction-count-slider"
-          defaultValue={[directionCount]}
+          defaultValue={[values.directionCount]}
           min={4}
           max={200}
           step={1}
-          onValueChange={([value]) => onChangeDirectionCount(value)}
+          onValueChange={([value]) => handleChangeDirectionCount(value)}
         />
       </div>
 
       <div className="grid gap-2">
         <label htmlFor="shadow-offset-slider">
-          影をずらす距離: <code>{shadowOffset}px</code>
+          影をずらす距離: <code>{values.shadowOffset}px</code>
         </label>
         <Slider
           id="shadow-offset-slider"
-          defaultValue={[shadowOffset]}
+          defaultValue={[values.shadowOffset]}
           min={0}
           max={20}
           step={1}
-          onValueChange={([value]) => onChangeShadowOffset(value)}
+          onValueChange={([value]) => handleChangeShadowOffset(value)}
         />
       </div>
 
@@ -84,19 +89,19 @@ export default function ContentCustomize({
         className="relative grid cursor-pointer gap-2"
       >
         <span>
-          枠線の色: <code>{strokeColor}</code>
+          枠線の色: <code>{values.strokeColor}</code>
         </span>
         <span
           aria-hidden="true"
           className="block h-6 rounded border border-input"
-          style={{ backgroundColor: strokeColor }}
+          style={{ backgroundColor: values.strokeColor }}
         />
         <input
           id="stroke-color-input"
           type="color"
-          value={strokeColor}
+          value={values.strokeColor}
           className="sr-only bottom-0"
-          onChange={(e) => onChangeStrokeColor(e.target.value)}
+          onChange={(e) => handleChangeStrokeColor(e.target.value)}
         />
       </label>
 
@@ -105,28 +110,28 @@ export default function ContentCustomize({
         className="relative grid cursor-pointer gap-2"
       >
         <span>
-          文字の色: <code>{textColor}</code>
+          文字の色: <code>{values.textColor}</code>
         </span>
         <span
           aria-hidden="true"
           className="block h-6 rounded border border-input"
-          style={{ backgroundColor: textColor }}
+          style={{ backgroundColor: values.textColor }}
         />
         <input
           id="text-color-input"
           type="color"
-          value={textColor}
+          value={values.textColor}
           className="sr-only bottom-0"
-          onChange={(e) => onChangeTextColor(e.target.value)}
+          onChange={(e) => handleChangeTextColor(e.target.value)}
         />
       </label>
 
       <div className="grid gap-2">
         <label htmlFor="font-weight-select">
-          文字の太さ: <code>{fontWeight}</code>
+          文字の太さ: <code>{values.fontWeight}</code>
         </label>
         <CustomSelect
-          defaultValue={fontWeight.toString()}
+          defaultValue={values.fontWeight.toString()}
           options={[
             { label: '100', value: '100' },
             { label: '200', value: '200' },
@@ -138,7 +143,7 @@ export default function ContentCustomize({
             { label: '800', value: '800' },
             { label: '900', value: '900' },
           ]}
-          onChange={onChangeFontWeight}
+          onChange={handleChangeFontWeight}
         />
       </div>
 
@@ -146,9 +151,9 @@ export default function ContentCustomize({
         <label htmlFor="sample-text-input">サンプルテキスト</label>
         <Textarea
           id="sample-text-input"
-          value={sampleText}
+          value={values.sampleText}
           rows={10}
-          onChange={(e) => onChangeSampleText(e.target.value)}
+          onChange={(e) => handleChangeSampleText(e.target.value)}
         />
       </div>
     </div>

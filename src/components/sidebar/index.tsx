@@ -1,81 +1,26 @@
 import Header from '@/components/header'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { DEFAULT_VALUES } from '@/constants/default-values'
-import type { FontWeight } from '@/types/values'
 import Codesnippet from './codesnippet'
 import ContentCustomize from './content-customize'
 import ContentDefault from './content-default'
 import CustomizeDialog from './adjust-dialog'
+import { valuesAtom } from '@/states/values'
+import { useAtom, useAtomValue } from 'jotai'
+import { textShadowAtom } from '@/states/text-shadow'
 
-type Props = {
-  fontWeight: FontWeight
-  textColor: string
-  strokeWidth: number
-  directionCount: number
-  strokeColor: string
-  shadowOffset: number
-  sampleText: string
-  textShadow: string
-  onChangeFontWeight: (value: FontWeight) => void
-  onChangeTextColor: (value: string) => void
-  onChangeStrokeWidth: (value: number) => void
-  onChangeDirectionCount: (value: number) => void
-  onChangeStrokeColor: (value: string) => void
-  onChangeShadowOffset: (value: number) => void
-  onChangeSampleText: (value: string) => void
-}
+export default function Sidebar() {
+  const [values, setValues] = useAtom(valuesAtom)
+  const textShadow = useAtomValue(textShadowAtom)
 
-const validateFontWeight = (value: number): value is FontWeight => {
-  return [100, 200, 300, 400, 500, 600, 700, 800, 900].includes(value)
-}
-
-export default function Sidebar({
-  fontWeight,
-  textColor,
-  strokeWidth,
-  directionCount,
-  strokeColor,
-  shadowOffset,
-  sampleText,
-  textShadow,
-  onChangeFontWeight,
-  onChangeTextColor,
-  onChangeStrokeWidth,
-  onChangeDirectionCount,
-  onChangeStrokeColor,
-  onChangeShadowOffset,
-  onChangeSampleText,
-}: Props) {
-  const code = `color: ${textColor};
-font-weight: ${fontWeight};
-text-shadow: ${textShadow.replace(strokeColor, 'var(--color)')};
---color: ${strokeColor};`
-
-  const defaultStrokeWidth = DEFAULT_VALUES.strokeWidth.toString()
-
-  const handleChangeDefaultStrokeWidth = (value: string) => {
-    const num = Number(value)
-    if (!Number.isNaN(num)) {
-      onChangeFontWeight(DEFAULT_VALUES.fontWeight)
-      onChangeTextColor(DEFAULT_VALUES.textColor)
-      onChangeStrokeWidth(num)
-      onChangeDirectionCount(DEFAULT_VALUES.directionCount)
-      onChangeStrokeColor(DEFAULT_VALUES.strokeColor)
-      onChangeShadowOffset(DEFAULT_VALUES.shadowOffset)
-      onChangeSampleText(DEFAULT_VALUES.sampleText)
-    }
-  }
+  const code = `color: ${values.textColor};
+font-weight: ${values.fontWeight};
+text-shadow: ${textShadow.replace(values.strokeColor, 'var(--color)')};
+--color: ${values.strokeColor};`
 
   const handleChangeTabs = (value: string) => {
     if (value === 'default') {
-      handleChangeDefaultStrokeWidth(defaultStrokeWidth)
-    }
-  }
-
-  const handleChangeFontWeight = (value: string) => {
-    const num = Number(value)
-    if (validateFontWeight(num)) {
-      onChangeFontWeight(num)
+      setValues(DEFAULT_VALUES)
     }
   }
 
@@ -90,28 +35,10 @@ text-shadow: ${textShadow.replace(strokeColor, 'var(--color)')};
             <TabsTrigger value="customize">Customize</TabsTrigger>
           </TabsList>
           <TabsContent value="default">
-            <ContentDefault
-              defaultValue={defaultStrokeWidth}
-              onChange={handleChangeDefaultStrokeWidth}
-            />
+            <ContentDefault />
           </TabsContent>
           <TabsContent value="customize">
-            <ContentCustomize
-              fontWeight={fontWeight}
-              textColor={textColor}
-              strokeWidth={strokeWidth}
-              directionCount={directionCount}
-              strokeColor={strokeColor}
-              shadowOffset={shadowOffset}
-              sampleText={sampleText}
-              onChangeFontWeight={handleChangeFontWeight}
-              onChangeTextColor={onChangeTextColor}
-              onChangeStrokeWidth={onChangeStrokeWidth}
-              onChangeDirectionCount={onChangeDirectionCount}
-              onChangeStrokeColor={onChangeStrokeColor}
-              onChangeShadowOffset={onChangeShadowOffset}
-              onChangeSampleText={onChangeSampleText}
-            />
+            <ContentCustomize />
           </TabsContent>
         </Tabs>
 
@@ -121,14 +48,7 @@ text-shadow: ${textShadow.replace(strokeColor, 'var(--color)')};
             <div className="flex items-center justify-between">
               <p>コード</p>
               <div className="flex-shrink-0">
-                <CustomizeDialog
-                  fontWeight={fontWeight}
-                  textColor={textColor}
-                  strokeWidth={strokeWidth}
-                  directionCount={directionCount}
-                  strokeColor={strokeColor}
-                  shadowOffset={shadowOffset}
-                />
+                <CustomizeDialog />
               </div>
             </div>
             <Codesnippet code={code} />

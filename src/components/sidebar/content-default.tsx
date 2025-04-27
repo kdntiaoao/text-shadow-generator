@@ -1,9 +1,7 @@
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
-
-type Props<T extends string> = {
-  defaultValue: NoInfer<T>
-  onChange: (value: T) => void
-}
+import { DEFAULT_VALUES } from '@/constants/default-values'
+import { valuesAtom } from '@/states/values'
+import { useAtom } from 'jotai'
 
 const DEFAULT_OPTIONS = [
   { label: '2px', value: '2' },
@@ -13,13 +11,22 @@ const DEFAULT_OPTIONS = [
   { label: '12px', value: '12' },
 ] as const
 
-export default function ContentDefault<T extends string>({
-  defaultValue,
-  onChange,
-}: Props<T>) {
+export default function ContentDefault() {
+  const [values, setValues] = useAtom(valuesAtom)
+
+  const handleChangeDefaultStrokeWidth = (value: string) => {
+    const strokeWidth = Number(value)
+    if (!Number.isNaN(strokeWidth)) {
+      setValues({ ...DEFAULT_VALUES, strokeWidth })
+    }
+  }
+
   return (
     <div className="py-4">
-      <RadioGroup defaultValue={defaultValue} onValueChange={onChange}>
+      <RadioGroup
+        value={values.strokeWidth.toString()}
+        onValueChange={handleChangeDefaultStrokeWidth}
+      >
         {DEFAULT_OPTIONS.map(({ label, value }) => (
           <label
             key={value}

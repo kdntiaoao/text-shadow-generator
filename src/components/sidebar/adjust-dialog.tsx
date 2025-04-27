@@ -1,5 +1,4 @@
 import { CSSProperties, useRef, useState } from 'react'
-import { generateTextShadow } from '@/utils/generate-text-shadow'
 import {
   Dialog,
   DialogContent,
@@ -7,38 +6,23 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { FontWeight } from '@/types/values'
 import { RotateCcw, Settings } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import AdjustDialogCodesnippet from './adjust-dialog-codesnippet'
+import { valuesAtom } from '@/states/values'
+import { useAtomValue } from 'jotai'
+import { textShadowAtom } from '@/states/text-shadow'
 
-type Props = {
-  fontWeight: FontWeight
-  textColor: string
-  strokeWidth: number
-  directionCount: number
-  strokeColor: string
-  shadowOffset: number
-}
-
-export default function AdjustDialog({
-  fontWeight,
-  textColor,
-  strokeWidth,
-  directionCount,
-  strokeColor,
-  shadowOffset,
-}: Props) {
+export default function AdjustDialog() {
   const ref = useRef<HTMLDivElement>(null)
   const [target, setTarget] = useState<string | null>(null)
   const [disabledValues, setDisabledValues] = useState<Set<string> | null>(null)
+  const values = useAtomValue(valuesAtom)
+  const textShadow = useAtomValue(textShadowAtom)
 
-  const textShadowValues = generateTextShadow({
-    width: strokeWidth,
-    directionCount,
-    color: 'var(--color)',
-    shadowOffset,
-  }).split(/,\s*/)
+  const textShadowValues = textShadow
+    .replace(values.strokeColor, 'var(--color)')
+    .split(/,\s*/)
 
   const getTextShadowResult = () => {
     const result = textShadowValues
@@ -97,13 +81,16 @@ export default function AdjustDialog({
         <DialogDescription className="sr-only">
           text-shadowの値で不要なものを非表示にしてください。
         </DialogDescription>
-        <div className="text-center text-9xl" style={{ fontWeight }}>
+        <div
+          className="text-center text-9xl"
+          style={{ fontWeight: values.fontWeight }}
+        >
           <div
             style={
               {
-                color: textColor,
+                color: values.textColor,
                 textShadow: textShadowResult,
-                '--color': strokeColor,
+                '--color': values.strokeColor,
               } as CSSProperties
             }
           >
