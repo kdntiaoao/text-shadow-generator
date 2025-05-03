@@ -1,3 +1,8 @@
+import {
+  DEFAULT_SHADOW_SETTINGS,
+  DEFAULT_TEXT_SETTINGS,
+} from "@/constants/defaults";
+import { generateId } from "@/utils/generate-id";
 import type React from "react";
 import { createContext, useContext, useEffect, useReducer } from "react";
 import type { AppState, Preset, ShadowSettings, TextSettings } from "../types";
@@ -7,43 +12,20 @@ import {
   savePresets,
 } from "../utils/preset-manager";
 
-// Initial shadow settings
-const defaultShadowSettings: ShadowSettings = {
-  strokeWidth: 2,
-  color: "#000000",
-  innerShadow: false,
-  glow: false,
-  glowIntensity: 1,
-};
-
-// Initial text settings
-const defaultTextSettings: TextSettings = {
-  content: "Preview Text",
-  fontSize: 36,
-  fontWeight: 700,
-  color: "#ffffff",
-};
-
-// Initial app state
 const initialState: AppState = {
-  shadowSettings: defaultShadowSettings,
-  textSettings: defaultTextSettings,
+  shadowSettings: DEFAULT_SHADOW_SETTINGS,
+  textSettings: DEFAULT_TEXT_SETTINGS,
   presets: [],
   currentPresetId: null,
 };
 
-// Action types
 type Action =
   | { type: "SET_SHADOW_SETTINGS"; payload: Partial<ShadowSettings> }
   | { type: "SET_TEXT_SETTINGS"; payload: Partial<TextSettings> }
   | { type: "ADD_PRESET"; payload: Preset }
   | {
       type: "UPDATE_PRESET";
-      payload: {
-        id: string;
-        shadowSettings: ShadowSettings;
-        textSettings: TextSettings;
-      };
+      payload: Pick<Preset, "id" | "shadowSettings" | "textSettings">;
     }
   | { type: "DELETE_PRESET"; payload: string }
   | { type: "LOAD_PRESET"; payload: string }
@@ -53,7 +35,6 @@ type Action =
       payload: { shadowSettings: ShadowSettings; textSettings: TextSettings };
     };
 
-// Reducer function
 function appReducer(state: AppState, action: Action): AppState {
   switch (action.type) {
     case "SET_SHADOW_SETTINGS":
@@ -140,8 +121,7 @@ function appReducer(state: AppState, action: Action): AppState {
   }
 }
 
-// Context type
-interface AppContextType {
+type AppContextType = {
   state: AppState;
   setShadowSettings: (settings: Partial<ShadowSettings>) => void;
   setTextSettings: (settings: Partial<TextSettings>) => void;
@@ -149,36 +129,27 @@ interface AppContextType {
   updatePreset: (id: string) => void;
   deletePreset: (id: string) => void;
   loadPreset: (id: string) => void;
-}
+};
 
-// Create context
-const AppContext = createContext<AppContextType | undefined>(undefined);
+const AppContext = createContext<AppContextType | null>(null);
 
-// Provider component
 export function AppProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(appReducer, initialState);
 
-  // Load presets from localStorage on initial render
   useEffect(() => {
     const savedPresets = loadPresets();
     dispatch({ type: "LOAD_PRESETS", payload: savedPresets });
 
-    // Check for URL parameters
     const urlParams = parseUrlParams();
     if (urlParams) {
-      dispatch({
-        type: "LOAD_FROM_URL",
-        payload: urlParams,
-      });
+      dispatch({ type: "LOAD_FROM_URL", payload: urlParams });
     }
   }, []);
 
-  // Save presets to localStorage when they change
   useEffect(() => {
     savePresets(state.presets);
   }, [state.presets]);
 
-  // Context value
   const contextValue: AppContextType = {
     state,
     setShadowSettings: (settings) =>
@@ -186,8 +157,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     setTextSettings: (settings) =>
       dispatch({ type: "SET_TEXT_SETTINGS", payload: settings }),
     addPreset: (name) => {
-      const newPreset: Preset = {
-        id: Date.now().toString(),
+      const newPreset = {
+        id: generateId(),
         name,
         shadowSettings: state.shadowSettings,
         textSettings: state.textSettings,
@@ -195,14 +166,12 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       dispatch({ type: "ADD_PRESET", payload: newPreset });
     },
     updatePreset: (id) => {
-      dispatch({
-        type: "UPDATE_PRESET",
-        payload: {
-          id,
-          shadowSettings: state.shadowSettings,
-          textSettings: state.textSettings,
-        },
-      });
+      const newPreset = {
+        id,
+        shadowSettings: state.shadowSettings,
+        textSettings: state.textSettings,
+      };
+      dispatch({ type: "UPDATE_PRESET", payload: newPreset });
     },
     deletePreset: (id) => {
       dispatch({ type: "DELETE_PRESET", payload: id });
@@ -212,16 +181,13 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     },
   };
 
-  return (
-    <AppContext.Provider value={contextValue}>{children}</AppContext.Provider>
-  );
+  return <AppContext value={contextValue}>{children}</AppContext>;
 }
 
-// Custom hook to use the app context
 export function useAppContext() {
   const context = useContext(AppContext);
 
-  if (context === undefined) {
+  if (context === null) {
     throw new Error("useAppContext must be used within an AppProvider");
   }
 

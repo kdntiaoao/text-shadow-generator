@@ -40,11 +40,11 @@ export function PresetManager() {
     loadPreset(id);
   };
 
-  const handleUpdatePreset = () => {
+  const handleUpdatePreset = useCallback(() => {
     if (state.currentPresetId) {
       updatePreset(state.currentPresetId);
     }
-  };
+  }, [state.currentPresetId, updatePreset]);
 
   const handleShare = useCallback(() => {
     const url = createShareableUrl(state.shadowSettings, state.textSettings);
