@@ -1,8 +1,8 @@
 import { Toaster } from "@/components/ui/sonner";
-import { ControlPanel } from "./components/features/ControlPanel";
-import { Footer } from "./components/features/Footer";
-import { Header } from "./components/features/Header";
-import { PresetManager } from "./components/features/PresetManager";
+import { ControlPanel } from "./components/features/control-panel";
+import { Footer } from "./components/features/footer";
+import { Header } from "./components/features/header";
+import { PresetManager } from "./components/features/preset-manager";
 import { AppProvider } from "./context/app-context";
 
 function App() {
