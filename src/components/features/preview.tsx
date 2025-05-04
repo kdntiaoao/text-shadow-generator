@@ -19,15 +19,28 @@ export function Preview() {
 
   return (
     <div className="min-h-[200px] place-content-center grid p-8 rounded-lg bg-gray-100">
-      <p
-        style={{
-          fontSize: `${textSettings.fontSize}px`,
-          fontWeight: textSettings.fontWeight,
-          color: textSettings.color,
-          textShadow,
-        }}
-      >
-        {textSettings.content}
+      <p className="relative">
+        <span
+          style={{
+            fontSize: `${textSettings.fontSize}px`,
+            fontWeight: textSettings.fontWeight,
+            color: textSettings.color,
+            textShadow,
+          }}
+        >
+          {textSettings.content}
+        </span>
+        <span
+          style={{
+            fontSize: `${textSettings.fontSize}px`,
+            fontWeight: textSettings.fontWeight,
+            color: textSettings.color,
+          }}
+          className="absolute inset-0 z-10 select-none pointer-events-none"
+          aria-hidden
+        >
+          {textSettings.content}
+        </span>
       </p>
     </div>
   );

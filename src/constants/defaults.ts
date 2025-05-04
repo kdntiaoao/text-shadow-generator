@@ -6,7 +6,8 @@ export const DEFAULT_SHADOW_SETTINGS: ShadowSettings = {
 };
 
 export const DEFAULT_TEXT_SETTINGS: TextSettings = {
-  content: "Preview Text",
+  content:
+    "あのイーハトーヴォのすきとおった風、夏でも底に冷たさをもつ青いそら、うつくしい森で飾られたモリーオ市、郊外のぎらぎらひかる草の波。",
   fontSize: 16,
   fontWeight: 400,
   color: "#ffffff",
