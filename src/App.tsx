@@ -1,4 +1,5 @@
 import { Toaster } from "@/components/ui/sonner";
+import { CodeOutput } from "./components/features/code-output";
 import { ControlPanel } from "./components/features/control-panel";
 import { Footer } from "./components/features/footer";
 import { Header } from "./components/features/header";
@@ -23,6 +24,10 @@ function App() {
             <div className="bg-card rounded-lg shadow-sm p-4 grid gap-4">
               <h2 className="text-lg font-medium">Preview</h2>
               <Preview />
+            </div>
+
+            <div className="bg-card rounded-lg shadow-sm p-4">
+              <CodeOutput />
             </div>
           </div>
         </main>
