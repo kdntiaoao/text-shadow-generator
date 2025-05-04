@@ -1,9 +1,6 @@
 export type ShadowSettings = {
   strokeWidth: number;
   color: string;
-  innerShadow: boolean;
-  glow: boolean;
-  glowIntensity: number;
 };
 
 export type TextSettings = {
