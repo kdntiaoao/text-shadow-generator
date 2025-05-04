@@ -3,6 +3,7 @@ import { ControlPanel } from "./components/features/control-panel";
 import { Footer } from "./components/features/footer";
 import { Header } from "./components/features/header";
 import { PresetManager } from "./components/features/preset-manager";
+import { Preview } from "./components/features/preview";
 import { AppProvider } from "./context/app-context";
 
 function App() {
@@ -16,6 +17,12 @@ function App() {
             <PresetManager />
             <div className="flex-1">
               <ControlPanel />
+            </div>
+          </div>
+          <div className="lg:col-span-2 grid gap-6 content-start py-6 grid-cols-1">
+            <div className="bg-card rounded-lg shadow-sm p-4 grid gap-4">
+              <h2 className="text-lg font-medium">Preview</h2>
+              <Preview />
             </div>
           </div>
         </main>
