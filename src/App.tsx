@@ -20,7 +20,7 @@ function App() {
               <ControlPanel />
             </div>
           </div>
-          <div className="lg:col-span-2 grid gap-6 content-start py-6 grid-cols-1">
+          <div className="lg:col-span-2 grid gap-6 content-start px-4 py-6 grid-cols-1 overflow-auto">
             <div className="bg-card rounded-lg shadow-sm p-4 grid gap-4">
               <h2 className="text-lg font-medium">Preview</h2>
               <Preview />

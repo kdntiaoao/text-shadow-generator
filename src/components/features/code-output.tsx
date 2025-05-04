@@ -7,14 +7,19 @@ import React, { useMemo } from "react";
 export function CodeOutput() {
   const [copied, setCopied] = React.useState(false);
   const { state } = useAppContext();
-  const { shadowSettings } = state;
+  const { shadowSettings, textSettings } = state;
 
-  // Generate the text shadow value
   const textShadowValue = useMemo(() => {
-    return generateTextShadow(shadowSettings);
-  }, [shadowSettings]);
+    return generateTextShadow({
+      width: shadowSettings.strokeWidth,
+      color: shadowSettings.color,
+      directionCount: shadowSettings.strokeWidth * 10,
+      radiusStep: Math.max(1, Math.trunc(textSettings.fontSize / 10)),
+      digits: 1,
+      shadowOffset: 0,
+    });
+  }, [shadowSettings, textSettings]);
 
-  // Copy to clipboard function
   const copyToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(`text-shadow: ${textShadowValue};`);
@@ -50,12 +55,15 @@ export function CodeOutput() {
         </Button>
       </div>
 
-      <div className="relative">
-        <pre className="bg-muted rounded-md p-4 overflow-x-auto text-sm font-mono">
+      <pre className="bg-muted rounded-md p-4 overflow-x-auto text-sm font-mono">
+        <code>
           text-shadow: {textShadowValue}
           {";"}
-        </pre>
-      </div>
+        </code>
+      </pre>
+      <p className="text-right text-sm">
+        <code>{new Blob([textShadowValue]).size.toLocaleString()} bytes</code>
+      </p>
     </div>
   );
 }

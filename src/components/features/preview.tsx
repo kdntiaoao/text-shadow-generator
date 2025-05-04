@@ -7,8 +7,15 @@ export function Preview() {
   const { shadowSettings, textSettings } = state;
 
   const textShadow = useMemo(() => {
-    return generateTextShadow(shadowSettings);
-  }, [shadowSettings]);
+    return generateTextShadow({
+      width: shadowSettings.strokeWidth,
+      color: shadowSettings.color,
+      directionCount: shadowSettings.strokeWidth * 10,
+      radiusStep: Math.max(1, Math.trunc(textSettings.fontSize / 10)),
+      digits: 1,
+      shadowOffset: 0,
+    });
+  }, [shadowSettings, textSettings]);
 
   return (
     <div className="min-h-[200px] place-content-center grid p-8 rounded-lg bg-gray-100">
@@ -20,7 +27,7 @@ export function Preview() {
           textShadow,
         }}
       >
-        {textSettings.content || "Preview Text"}
+        {textSettings.content}
       </p>
     </div>
   );

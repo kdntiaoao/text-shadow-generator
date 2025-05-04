@@ -116,7 +116,7 @@ export function ControlPanel() {
                 <Slider
                   id="stroke-width"
                   min={1}
-                  max={10}
+                  max={40}
                   step={1}
                   value={[shadowSettings.strokeWidth]}
                   onValueChange={handleStrokeWidthChange}
