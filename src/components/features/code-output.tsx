@@ -33,7 +33,7 @@ export function CodeOutput() {
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-medium">Generated Code</h3>
+        <h3 className="font-medium text-sm">Generated Code</h3>
         <Button
           variant="outline"
           size="sm"
@@ -55,7 +55,7 @@ export function CodeOutput() {
         </Button>
       </div>
 
-      <pre className="bg-muted rounded-md p-4 overflow-x-auto text-sm font-mono">
+      <pre className="overflow-x-auto rounded-md bg-muted p-4 font-mono text-sm">
         <code>
           text-shadow: {textShadowValue}
           {";"}

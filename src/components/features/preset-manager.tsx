@@ -162,7 +162,7 @@ export function PresetManager() {
                   <Button onClick={copyToClipboard}>Copy</Button>
                 </DialogClose>
               </div>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 Share this URL to give someone else your exact shadow settings.
               </p>
             </div>

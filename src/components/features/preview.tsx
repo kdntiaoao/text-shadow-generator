@@ -18,7 +18,7 @@ export function Preview() {
   }, [shadowSettings, textSettings]);
 
   return (
-    <div className="min-h-[200px] place-content-center grid p-8 rounded-lg bg-gray-100">
+    <div className="grid min-h-[200px] place-content-center rounded-lg bg-gray-100 p-8">
       <p className="relative">
         <span
           style={{
@@ -36,7 +36,7 @@ export function Preview() {
             fontWeight: textSettings.fontWeight,
             color: textSettings.color,
           }}
-          className="absolute inset-0 z-10 select-none pointer-events-none"
+          className="pointer-events-none absolute inset-0 z-10 select-none"
           aria-hidden
         >
           {textSettings.content}

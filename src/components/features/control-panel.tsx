@@ -32,7 +32,7 @@ export function ControlPanel() {
         defaultValue={["text-settings", "shadow-settings"]}
       >
         <AccordionItem value="text-settings">
-          <AccordionTrigger className="text-lg font-medium">
+          <AccordionTrigger className="font-medium text-lg">
             Text Settings
           </AccordionTrigger>
           <AccordionContent>
@@ -87,7 +87,7 @@ export function ControlPanel() {
                     type="color"
                     value={textSettings.color}
                     onChange={(e) => setTextSettings({ color: e.target.value })}
-                    className="w-12 h-10 p-1"
+                    className="h-10 w-12 p-1"
                   />
                   <Input
                     value={textSettings.color}
@@ -102,7 +102,7 @@ export function ControlPanel() {
         </AccordionItem>
 
         <AccordionItem value="shadow-settings">
-          <AccordionTrigger className="text-lg font-medium">
+          <AccordionTrigger className="font-medium text-lg">
             Shadow Settings
           </AccordionTrigger>
           <AccordionContent>
@@ -133,7 +133,7 @@ export function ControlPanel() {
                     onChange={(e) =>
                       setShadowSettings({ color: e.target.value })
                     }
-                    className="w-12 h-10 p-1"
+                    className="h-10 w-12 p-1"
                   />
                   <Input
                     value={shadowSettings.color}

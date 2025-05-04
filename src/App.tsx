@@ -10,23 +10,23 @@ import { AppProvider } from "./context/app-context";
 function App() {
   return (
     <AppProvider>
-      <div className="flex flex-col h-screen">
+      <div className="flex h-screen flex-col">
         <Header />
 
-        <main className="flex-1 container mx-auto px-4 md:px-6 grid grid-cols-1 lg:grid-cols-3 gap-6 overflow-hidden">
-          <div className="flex flex-col px-2 gap-4 overflow-auto py-6 [scrollbar-gutter:stable]">
+        <main className="container mx-auto grid flex-1 grid-cols-1 gap-6 overflow-hidden px-4 md:px-6 lg:grid-cols-3">
+          <div className="flex flex-col gap-4 overflow-auto px-2 py-6 [scrollbar-gutter:stable]">
             <PresetManager />
             <div className="flex-1">
               <ControlPanel />
             </div>
           </div>
-          <div className="lg:col-span-2 grid gap-6 content-start px-4 py-6 grid-cols-1 overflow-auto">
-            <div className="bg-card rounded-lg shadow-sm p-4 grid gap-4">
-              <h2 className="text-lg font-medium">Preview</h2>
+          <div className="grid grid-cols-1 content-start gap-6 overflow-auto px-4 py-6 lg:col-span-2">
+            <div className="grid gap-4 rounded-lg bg-card p-4 shadow-sm">
+              <h2 className="font-medium text-lg">Preview</h2>
               <Preview />
             </div>
 
-            <div className="bg-card rounded-lg shadow-sm p-4">
+            <div className="rounded-lg bg-card p-4 shadow-sm">
               <CodeOutput />
             </div>
           </div>
