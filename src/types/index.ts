@@ -10,16 +10,7 @@ export type TextSettings = {
   color: string;
 };
 
-export type Preset = {
-  id: string;
-  name: string;
-  shadowSettings: ShadowSettings;
-  textSettings: TextSettings;
-};
-
 export type AppState = {
   shadowSettings: ShadowSettings;
   textSettings: TextSettings;
-  presets: Preset[];
-  currentPresetId: string | null;
 };
