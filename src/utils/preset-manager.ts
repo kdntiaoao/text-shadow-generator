@@ -19,10 +19,6 @@ export function createShareableUrl(
 
   params.append("sw", shadowSettings.strokeWidth.toString());
   params.append("sc", shadowSettings.color);
-  params.append("is", shadowSettings.innerShadow ? "1" : "0");
-  params.append("gl", shadowSettings.glow ? "1" : "0");
-  params.append("gi", shadowSettings.glowIntensity.toString());
-
   params.append("tx", encodeURIComponent(textSettings.content));
   params.append("fs", textSettings.fontSize.toString());
   params.append("fw", textSettings.fontWeight.toString());
@@ -44,9 +40,6 @@ export function parseUrlParams(): {
     const shadowSettings: ShadowSettings = {
       strokeWidth: Number.parseInt(params.get("sw") || "0", 10),
       color: params.get("sc") || "#000000",
-      innerShadow: params.get("is") === "1",
-      glow: params.get("gl") === "1",
-      glowIntensity: Number.parseFloat(params.get("gi") || "1"),
     };
 
     const textSettings: TextSettings = {
