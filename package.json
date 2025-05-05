@@ -8,6 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "biome lint --write ./src",
     "check": "biome check --write ./src && tsc -b",
+    "check-unsafe": "biome check --write --unsafe ./src && tsc -b",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -40,11 +41,7 @@
     "vite": "^6.3.1"
   },
   "pnpm": {
-    "ignoredBuiltDependencies": [
-      "esbuild"
-    ],
-    "onlyBuiltDependencies": [
-      "@biomejs/biome"
-    ]
+    "ignoredBuiltDependencies": ["esbuild"],
+    "onlyBuiltDependencies": ["@biomejs/biome"]
   }
 }
