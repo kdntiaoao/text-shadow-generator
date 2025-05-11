@@ -48,7 +48,7 @@ export function generateTextShadow({
     ) {
       const x =
         radius === currentMaxRadius
-          ? Math.round(radius * Math.cos(angle)) / 10 ** digits
+          ? Math.round(radius * Math.cos(angle) * 10 ** digits) / 10 ** digits
           : Math.round(radius * Math.cos(angle));
       const y =
         radius === currentMaxRadius
