@@ -8,7 +8,7 @@ export function Preview() {
 
   const textShadow = useMemo(() => {
     return generateTextShadow({
-      width: shadowSettings.strokeWidth,
+      baseWidth: shadowSettings.strokeWidth,
       color: shadowSettings.color,
       directionCount: shadowSettings.strokeWidth * 10,
       radiusStep: Math.max(1, Math.trunc(textSettings.fontSize / 10)),
