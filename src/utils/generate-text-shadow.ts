@@ -33,11 +33,17 @@ export function generateTextShadow({
   shadowColor = color,
   addShadows,
 }: Params): string {
-  if (!baseWidth || !directionCount || blur < 0 || !radiusStep || digits < 0) {
-    console.error("Invalid parameters value");
-    return "";
+  if (
+    baseWidth <= 0 ||
+    directionCount <= 0 ||
+    blur < 0 ||
+    radiusStep <= 0 ||
+    digits < 0
+  ) {
+    throw new Error("generateTextShadow: invalid parameters");
   }
 
+  const factor = 10 ** digits;
   const blurValue = `${blur}px`;
   const shadows: Set<string> = new Set();
   const shadowOffsets: Set<string> = new Set();
@@ -51,14 +57,20 @@ export function generateTextShadow({
       angle < 2 * Math.PI;
       angle += (2 * Math.PI) / directionCount
     ) {
-      const x = Number((radius * Math.cos(angle)).toFixed(digits));
-      const y = Number((radius * Math.sin(angle)).toFixed(digits));
+      const x =
+        radius === currentMaxRadius
+          ? Math.round(radius * Math.cos(angle) * factor) / factor
+          : Math.round(radius * Math.cos(angle));
+      const y =
+        radius === currentMaxRadius
+          ? Math.round(radius * Math.sin(angle) * factor) / factor
+          : Math.round(radius * Math.sin(angle));
       const valueX = `${x}px`;
       const valueY = `${y}px`;
       shadows.add(`${valueX} ${valueY} ${blurValue} ${color}`);
       if (shadowOffset) {
-        const shadowX = Number((x + shadowOffset).toFixed(digits));
-        const shadowY = Number((y + shadowOffset).toFixed(digits));
+        const shadowX = Math.round((x + shadowOffset) * factor) / factor;
+        const shadowY = Math.round((y + shadowOffset) * factor) / factor;
         const valueShadowX = `${shadowX}px`;
         const valueShadowY = `${shadowY}px`;
         shadowOffsets.add(
@@ -78,14 +90,20 @@ export function generateTextShadow({
           angle < 2 * Math.PI;
           angle += (2 * Math.PI) / directionCount
         ) {
-          const x = Number((radius * Math.cos(angle)).toFixed(digits));
-          const y = Number((radius * Math.sin(angle)).toFixed(digits));
+          const x =
+            radius === currentMaxRadius
+              ? Math.round(radius * Math.cos(angle) * factor) / factor
+              : Math.round(radius * Math.cos(angle));
+          const y =
+            radius === currentMaxRadius
+              ? Math.round(radius * Math.sin(angle) * factor) / factor
+              : Math.round(radius * Math.sin(angle));
           const valueX = `${x}px`;
           const valueY = `${y}px`;
           shadows.add(`${valueX} ${valueY} ${blurValue} ${addShadow.color}`);
           if (shadowOffset) {
-            const shadowX = Number((x + shadowOffset).toFixed(digits));
-            const shadowY = Number((y + shadowOffset).toFixed(digits));
+            const shadowX = Math.round((x + shadowOffset) * factor) / factor;
+            const shadowY = Math.round((y + shadowOffset) * factor) / factor;
             const valueShadowX = `${shadowX}px`;
             const valueShadowY = `${shadowY}px`;
             shadowOffsets.add(
