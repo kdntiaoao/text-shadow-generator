@@ -1,115 +1,64 @@
-type Params = {
-  /** 縁取りの幅 */
-  baseWidth: number;
-  /** text-shadowを生成する方向の数 */
-  directionCount?: number;
-  /** 縁取りの色 */
+type Stroke = {
+  width: number;
   color: string;
+};
+
+type Params = {
+  /** text-shadow を生成するために使用されるストロークの配列 */
+  strokes: [Stroke, ...Stroke[]];
+  /** text-shadow が生成される方向の数 */
+  directionCount?: number;
   /** ぼかし */
   blur?: number;
-  /** 幅の間隔 */
+  /** text-shadow の半径のステップ間隔 */
   radiusStep?: number;
-  /** 一番外側の text-shadow の値の小数点の桁数 */
+  /** 最外周の text-shadow 値の小数点以下の桁数 */
   digits?: number;
   /** 影のオフセット */
   shadowOffset?: number;
   /** 影の色 */
   shadowColor?: string;
-  /** 追加する縁取り */
-  addShadows?: {
-    width: number;
-    color: string;
-  }[];
 };
 
 export function generateTextShadow({
-  baseWidth,
+  strokes,
   directionCount = 8,
-  color,
   blur = 0,
-  radiusStep = baseWidth,
+  radiusStep = strokes[0].width,
   digits = 0,
   shadowOffset = 0,
-  shadowColor = color,
-  addShadows,
+  shadowColor = strokes[0].color,
 }: Params): string {
-  if (
-    baseWidth <= 0 ||
-    directionCount <= 0 ||
-    blur < 0 ||
-    radiusStep <= 0 ||
-    digits < 0
-  ) {
-    throw new Error("generateTextShadow: invalid parameters");
-  }
-
   const factor = 10 ** digits;
   const blurValue = `${blur}px`;
   const shadows: Set<string> = new Set();
   const shadowOffsets: Set<string> = new Set();
+  const directions = [...Array(directionCount)].map((_, i) => {
+    const angle = (2 * Math.PI * i) / directionCount;
+    return [Math.cos(angle), Math.sin(angle)] as const;
+  });
 
   let radius = 0;
-  let currentMaxRadius = baseWidth;
-  while (radius < currentMaxRadius) {
-    radius = Math.min(radius + radiusStep, currentMaxRadius);
-    for (
-      let angle = 0;
-      angle < 2 * Math.PI;
-      angle += (2 * Math.PI) / directionCount
-    ) {
-      const x =
-        radius === currentMaxRadius
-          ? Math.round(radius * Math.cos(angle) * factor) / factor
-          : Math.round(radius * Math.cos(angle));
-      const y =
-        radius === currentMaxRadius
-          ? Math.round(radius * Math.sin(angle) * factor) / factor
-          : Math.round(radius * Math.sin(angle));
-      const valueX = `${x}px`;
-      const valueY = `${y}px`;
-      shadows.add(`${valueX} ${valueY} ${blurValue} ${color}`);
-      if (shadowOffset) {
-        const shadowX = Math.round((x + shadowOffset) * factor) / factor;
-        const shadowY = Math.round((y + shadowOffset) * factor) / factor;
-        const valueShadowX = `${shadowX}px`;
-        const valueShadowY = `${shadowY}px`;
-        shadowOffsets.add(
-          `${valueShadowX} ${valueShadowY} ${blurValue} ${shadowColor}`,
-        );
-      }
-    }
-  }
+  let currentMaxRadius = 0;
 
-  if (addShadows) {
-    for (const addShadow of addShadows) {
-      currentMaxRadius += addShadow.width;
-      while (radius < currentMaxRadius) {
-        radius = Math.min(radius + radiusStep, currentMaxRadius);
-        for (
-          let angle = 0;
-          angle < 2 * Math.PI;
-          angle += (2 * Math.PI) / directionCount
-        ) {
-          const x =
-            radius === currentMaxRadius
-              ? Math.round(radius * Math.cos(angle) * factor) / factor
-              : Math.round(radius * Math.cos(angle));
-          const y =
-            radius === currentMaxRadius
-              ? Math.round(radius * Math.sin(angle) * factor) / factor
-              : Math.round(radius * Math.sin(angle));
-          const valueX = `${x}px`;
-          const valueY = `${y}px`;
-          shadows.add(`${valueX} ${valueY} ${blurValue} ${addShadow.color}`);
-          if (shadowOffset) {
-            const shadowX = Math.round((x + shadowOffset) * factor) / factor;
-            const shadowY = Math.round((y + shadowOffset) * factor) / factor;
-            const valueShadowX = `${shadowX}px`;
-            const valueShadowY = `${shadowY}px`;
-            shadowOffsets.add(
-              `${valueShadowX} ${valueShadowY} ${blurValue} ${shadowColor}`,
-            );
-          }
+  for (const { width, color } of strokes) {
+    currentMaxRadius += width;
+    while (radius < currentMaxRadius) {
+      radius = Math.min(radius + radiusStep, currentMaxRadius);
+      for (const [dx, dy] of directions) {
+        const x = Math.round(radius * dx * factor) / factor;
+        const y = Math.round(radius * dy * factor) / factor;
+        const valueX = `${x}px`;
+        const valueY = `${y}px`;
+        shadows.add(`${valueX} ${valueY} ${blurValue} ${color}`);
+        if (shadowOffset) {
+          const shadowX = Math.round((x + shadowOffset) * factor) / factor;
+          const shadowY = Math.round((y + shadowOffset) * factor) / factor;
+          const valueShadowX = `${shadowX}px`;
+          const valueShadowY = `${shadowY}px`;
+          shadowOffsets.add(
+            `${valueShadowX} ${valueShadowY} ${blurValue} ${shadowColor}`,
+          );
         }
       }
     }
